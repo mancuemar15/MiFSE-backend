@@ -11,15 +11,15 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "epoca_vacaciones")
-public class EpocaVacaciones {
+@Table(name = "tipo_guardias_findes_festivos")
+public class TipoGuardiasFindesFestivos {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Integer id;
 
-	@Column(name = "Epoca", nullable = false)
-	private String epoca;
+	@Column(name = "Tipo", nullable = false)
+	private String tipo;
 
 }
