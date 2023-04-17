@@ -20,7 +20,7 @@ public class Centro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
+	private Integer id;
 
 	@Column(name = "Nombre", nullable = false)
 	private String nombre;
