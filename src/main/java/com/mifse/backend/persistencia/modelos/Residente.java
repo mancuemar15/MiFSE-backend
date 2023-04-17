@@ -5,21 +5,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lombok.Data;
 
 @Data
 @Entity
-@PrimaryKeyJoinColumn(name = "ID")
-public class Administrador {
+@Table(name = "residente")
+public class Residente {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@OneToOne
-	@JoinColumn(name = "ID")
-	private Usuario usuario;
+	@ManyToOne
+	@JoinColumn(name = "ID_tipo_residente")
+	private TipoResidente tipoResidente;
+
+	@ManyToOne
+	@JoinColumn(name = "ID_titulacion")
+	private Titulacion titulacion;
+
 }
