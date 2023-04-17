@@ -6,7 +6,7 @@ import com.mifse.backend.persistencia.modelos.Localidad;
 
 public interface ServicioLocalidad {
 
-	public List<Localidad> buscarTodas();
+	public List<Localidad> obtenerTodas();
 
-	public Localidad buscarPorId(Integer id);
+	public Localidad obtenerPorId(Integer id);
 }

@@ -19,11 +19,11 @@ public class ServicioLocalidadImpl implements ServicioLocalidad {
 	private RepositorioLocalidad repositorioLocalidad;
 
 	@Override
-	public List<Localidad> buscarTodas() {
+	public List<Localidad> obtenerTodas() {
 		return this.repositorioLocalidad.findAll();
 	}
 
-	public Localidad buscarPorId(Integer id) {
+	public Localidad obtenerPorId(Integer id) {
 		return this.repositorioLocalidad.findById(id).get();
 	}
 }
