@@ -6,7 +6,7 @@ import com.mifse.backend.persistencia.modelos.Titulacion;
 
 public interface ServicioTitulacion {
 
-	public List<Titulacion> obtenerTodasTitulaciones();
+	public List<Titulacion> obtenerTodas();
 
-	public Titulacion obtenerTitulacionPorId(Integer id);
+	public Titulacion obtenerPorId(Integer id);
 }

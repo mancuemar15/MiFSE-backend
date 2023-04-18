@@ -19,12 +19,12 @@ public class ControladorTitulaciones {
 
 	@GetMapping
 	public ResponseEntity<?> obtenerTitulaciones() {
-		return ResponseEntity.ok(this.servicioTitulacion.obtenerTodasTitulaciones());
+		return ResponseEntity.ok(this.servicioTitulacion.obtenerTodas());
 	}
 
-	@GetMapping
-	public ResponseEntity<?> obtenerTitulacioPorId(@PathVariable Integer id) {
-		Titulacion titulacion = this.servicioTitulacion.obtenerTitulacionPorId(id);
+	@GetMapping("/{id}")
+	public ResponseEntity<?> obtenerTitulacionPorId(@PathVariable Integer id) {
+		Titulacion titulacion = this.servicioTitulacion.obtenerPorId(id);
 
 		if (titulacion == null) {
 			return ResponseEntity.notFound().build();

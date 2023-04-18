@@ -1,6 +1,9 @@
 package com.mifse.backend.persistencia.modelos;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -13,12 +16,12 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "residente")
-@PrimaryKeyJoinColumn(name = "usuarioId")
+@PrimaryKeyJoinColumn(name = "ID")
 public class Residente extends Usuario {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_tipo_residente")

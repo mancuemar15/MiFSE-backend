@@ -2,12 +2,17 @@ package com.mifse.backend.servicios.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.mifse.backend.persistencia.modelos.Administrador;
 import com.mifse.backend.persistencia.repositorios.RepositorioAdministrador;
 import com.mifse.backend.servicios.ServicioAdministrador;
 
+@Service
+@Transactional
 public class ServicioAdministradorImpl implements ServicioAdministrador {
 
 	@Autowired
