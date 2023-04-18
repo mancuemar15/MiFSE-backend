@@ -22,6 +22,11 @@ public class ControladorLocalidades {
 		return ResponseEntity.ok(this.servicioLocalidad.obtenerTodas());
 	}
 
+	@GetMapping("/provincia/{idProvincia}")
+	public ResponseEntity<?> obtenerLocalidadesPorIdProvincia(@PathVariable Integer idProvincia) {
+		return ResponseEntity.ok(this.servicioLocalidad.obtenerTodasPorIdProvincia(idProvincia));
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<?> obtenerLocalidadPorId(@PathVariable Integer id) {
 		Localidad localidad = this.servicioLocalidad.obtenerPorId(id);

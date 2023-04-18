@@ -22,9 +22,15 @@ public class ServicioProvinciaImpl implements ServicioProvincia {
 	public List<Provincia> obtenerTodas() {
 		return this.repositorioProvincia.findAll();
 	}
+	
+	@Override
+    public List<Provincia> obtenerTodasPorIdAutonomia(Integer idAutonomia) {
+        return repositorioProvincia.findAllByAutonomiaId(idAutonomia);
+    }
 
 	@Override
 	public Provincia obtenerPorId(Integer id) {
 		return this.repositorioProvincia.findById(id).get();
 	}
+
 }

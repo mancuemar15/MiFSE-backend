@@ -23,6 +23,12 @@ public class ServicioLocalidadImpl implements ServicioLocalidad {
 		return this.repositorioLocalidad.findAll();
 	}
 
+	@Override
+	public List<Localidad> obtenerTodasPorIdProvincia(Integer idProvincia) {
+		return this.repositorioLocalidad.findAllByProvinciaId(idProvincia);
+	}
+
+	@Override
 	public Localidad obtenerPorId(Integer id) {
 		return this.repositorioLocalidad.findById(id).get();
 	}

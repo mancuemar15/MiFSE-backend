@@ -8,5 +8,7 @@ public interface ServicioLocalidad {
 
 	public List<Localidad> obtenerTodas();
 
+	public List<Localidad> obtenerTodasPorIdProvincia(Integer idProvincia);
+
 	public Localidad obtenerPorId(Integer id);
 }

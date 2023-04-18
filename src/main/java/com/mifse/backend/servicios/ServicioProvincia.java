@@ -8,5 +8,7 @@ public interface ServicioProvincia {
 
 	public List<Provincia> obtenerTodas();
 
+	public List<Provincia> obtenerTodasPorIdAutonomia(Integer idAutonomia);
+
 	public Provincia obtenerPorId(Integer id);
 }

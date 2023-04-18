@@ -22,6 +22,11 @@ public class ControladorProvincias {
 		return ResponseEntity.ok(this.servicioProvincia.obtenerTodas());
 	}
 
+	@GetMapping("/autonomia/{idAutonomia}")
+	public ResponseEntity<?> obtenerProvinciasPorIdAutonomia(@PathVariable Integer idAutonomia) {
+		return ResponseEntity.ok(this.servicioProvincia.obtenerTodasPorIdAutonomia(idAutonomia));
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<?> obtenerProvinciaPorId(@PathVariable Integer id) {
 		Provincia provincia = servicioProvincia.obtenerPorId(id);
