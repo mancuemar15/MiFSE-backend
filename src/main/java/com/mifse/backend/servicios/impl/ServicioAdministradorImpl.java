@@ -1,10 +1,9 @@
 package com.mifse.backend.servicios.impl;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mifse.backend.persistencia.modelos.Administrador;
@@ -18,10 +17,8 @@ public class ServicioAdministradorImpl implements ServicioAdministrador {
 	@Autowired
 	private RepositorioAdministrador respositorioAdministrador;
 
-	@Override
-	public List<Administrador> obtenerTodos() {
-		return this.respositorioAdministrador.findAll();
-	}
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public Administrador obtenerPorId(Integer id) {
@@ -30,6 +27,7 @@ public class ServicioAdministradorImpl implements ServicioAdministrador {
 
 	@Override
 	public Administrador guardar(Administrador administrador) {
+		administrador.setContrasena(this.passwordEncoder.encode(administrador.getContrasena()));
 		return this.respositorioAdministrador.save(administrador);
 	}
 

@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 @Data
@@ -54,5 +56,6 @@ public class Usuario {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_tipo_usuario")
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private TipoUsuario tipoUsuario;
 }

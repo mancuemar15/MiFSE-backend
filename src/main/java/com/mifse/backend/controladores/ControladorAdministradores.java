@@ -22,11 +22,6 @@ public class ControladorAdministradores {
 	@Autowired
 	private ServicioAdministrador servicioAdministrador;
 
-	@GetMapping
-	public ResponseEntity<?> obtenerTodosAdministradores() {
-		return ResponseEntity.ok(this.servicioAdministrador.obtenerTodos());
-	}
-
 	@GetMapping("/{id}")
 	public ResponseEntity<?> obtenerAdministradorPorId(@PathVariable Integer id) {
 		Administrador administrador = this.servicioAdministrador.obtenerPorId(id);
