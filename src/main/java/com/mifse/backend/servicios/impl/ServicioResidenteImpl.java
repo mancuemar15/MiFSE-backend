@@ -13,6 +13,8 @@ import com.mifse.backend.servicios.ServicioResidente;
 @Transactional
 public class ServicioResidenteImpl implements ServicioResidente {
 
+	private final String URL_VERIFICACION = "http://localhost:8090/usuarios/verificar-correo-electronico?id=";
+
 	@Autowired
 	private RepositorioResidente repositorioResidente;
 
@@ -22,7 +24,8 @@ public class ServicioResidenteImpl implements ServicioResidente {
 	@Override
 	public Residente guardar(Residente residente) {
 		residente.setContrasena(this.passwordEncoder.encode(residente.getContrasena()));
-		return this.repositorioResidente.save(residente);
+		Residente residenteGuardado = this.repositorioResidente.save(residente);
+		return this.repositorioResidente.save(residenteGuardado);
 	}
 
 }
