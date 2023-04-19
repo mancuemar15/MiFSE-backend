@@ -34,13 +34,13 @@ public class ControladorLista {
 
 	@PostMapping
 	public ResponseEntity<?> crearLista(@RequestBody Lista lista) {
-		Lista listaCreada = servicioLista.guardar(lista);
+		Lista listaCreada = this.servicioLista.guardar(lista);
 		return ResponseEntity.status(HttpStatus.CREATED).body(listaCreada);
 	}
 
 	@DeleteMapping("/{idLista}")
 	public ResponseEntity<?> eliminarLista(@PathVariable Integer idLista) {
-		servicioLista.eliminarPorId(idLista);
+		this.servicioLista.eliminarPorId(idLista);
 		return ResponseEntity.noContent().build();
 	}
 }

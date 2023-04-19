@@ -2,10 +2,9 @@ package com.mifse.backend.servicios.impl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mifse.backend.persistencia.modelos.Localidad;
 import com.mifse.backend.persistencia.repositorios.RepositorioLocalidad;
