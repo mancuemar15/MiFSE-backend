@@ -56,16 +56,6 @@ public class ControladorUsuarios {
 		return ResponseEntity.ok(usuario);
 	}
 
-	@PostMapping
-	public ResponseEntity<?> guardarUsuario(@RequestBody Usuario usuario) {
-		try {
-			this.servicioUsuario.guardar(usuario);
-			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar el usuario");
-		}
-	}
-
 	@PutMapping("/{id}")
 	public ResponseEntity<?> actualizarUsuario(@PathVariable("id") Integer id,
 			@RequestBody Usuario usuarioActualizado) {

@@ -1,6 +1,5 @@
 package com.mifse.backend.servicios.impl;
 
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -52,29 +51,6 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 		return this.repositorioUsuario.existsByEmail(email);
 	}
 
-	@Override
-	public void guardar(Usuario usuario) {
-		if (usuario.getNombre() == null || usuario.getNombre().isEmpty()) {
-			throw new IllegalArgumentException("El nombre es obligatorio");
-		}
-		if (usuario.getApellido1() == null || usuario.getApellido1().isEmpty()) {
-			throw new IllegalArgumentException("El primer apellido es obligatorio");
-		}
-		if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
-			throw new IllegalArgumentException("El email es obligatorio");
-		}
-		if (usuario.getContrasena() == null || usuario.getContrasena().isEmpty()) {
-			throw new IllegalArgumentException("La contraseña es obligatoria");
-		}
-
-		if (this.repositorioUsuario.existsByEmail(usuario.getEmail())) {
-			throw new IllegalArgumentException("El email ya está en uso");
-		}
-
-		usuario.setContrasena(this.passwordEncoder.encode(usuario.getContrasena()));
-		usuario.setFechaAlta(new Date());
-		this.repositorioUsuario.save(usuario);
-	}
 
 	@Override
 	public void actualizar(Usuario usuario) {
