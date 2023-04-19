@@ -12,7 +12,7 @@ import com.mifse.backend.servicios.ServicioLocalidad;
 
 @RestController
 @RequestMapping(path = "/localidades")
-public class ControladorLocalidades {
+public class ControladorLocalidad {
 
 	@Autowired
 	private ServicioLocalidad servicioLocalidad;

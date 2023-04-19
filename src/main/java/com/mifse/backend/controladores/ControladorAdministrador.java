@@ -17,7 +17,7 @@ import com.mifse.backend.servicios.ServicioAdministrador;
 
 @RestController
 @RequestMapping("/administradores")
-public class ControladorAdministradores {
+public class ControladorAdministrador {
 
 	@Autowired
 	private ServicioAdministrador servicioAdministrador;

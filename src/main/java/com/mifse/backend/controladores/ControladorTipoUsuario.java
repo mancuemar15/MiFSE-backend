@@ -10,7 +10,7 @@ import com.mifse.backend.servicios.ServicioTipoUsuario;
 
 @RestController
 @RequestMapping(path = "/tipos-usuarios")
-public class ControladorTiposUsuarios {
+public class ControladorTipoUsuario {
 
 	@Autowired
 	private ServicioTipoUsuario servicioTipoUsuario;

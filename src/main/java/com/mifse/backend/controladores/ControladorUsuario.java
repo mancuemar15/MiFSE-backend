@@ -21,7 +21,7 @@ import com.mifse.backend.servicios.ServicioUsuario;
 
 @RestController
 @RequestMapping(path = "/usuarios")
-public class ControladorUsuarios {
+public class ControladorUsuario {
 
 	@Autowired
 	private ServicioUsuario servicioUsuario;

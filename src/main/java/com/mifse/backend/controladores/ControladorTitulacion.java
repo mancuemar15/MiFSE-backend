@@ -12,7 +12,7 @@ import com.mifse.backend.servicios.ServicioTitulacion;
 
 @RestController
 @RequestMapping("/titulaciones")
-public class ControladorTitulaciones {
+public class ControladorTitulacion {
 
 	@Autowired
 	private ServicioTitulacion servicioTitulacion;

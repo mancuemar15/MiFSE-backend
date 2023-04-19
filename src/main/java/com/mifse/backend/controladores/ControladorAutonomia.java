@@ -11,7 +11,7 @@ import com.mifse.backend.servicios.ServicioAutonomia;
 
 @RestController
 @RequestMapping(path = "/autonomias")
-public class ControladorAutonomias {
+public class ControladorAutonomia {
 
 	@Autowired
 	private ServicioAutonomia servicioAutonomia;
