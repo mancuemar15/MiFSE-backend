@@ -28,8 +28,8 @@ public class ServicioListaImpl implements ServicioLista {
 	}
 
 	@Override
-	public void eliminarPorId(Integer idLista) {
-		this.repositorioLista.deleteById(idLista);
+	public void eliminarPorId(Integer id) {
+		this.repositorioLista.deleteById(id);
 	}
 
 }

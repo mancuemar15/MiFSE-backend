@@ -10,5 +10,5 @@ public interface ServicioLista {
     
     public Lista guardar(Lista lista);
     
-    void eliminarPorId(Integer idLista);
+    void eliminarPorId(Integer id);
 }

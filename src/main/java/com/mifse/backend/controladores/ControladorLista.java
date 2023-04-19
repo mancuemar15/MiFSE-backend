@@ -23,7 +23,7 @@ public class ControladorLista {
 	@Autowired
 	private ServicioLista servicioLista;
 
-	@GetMapping("/usuario/{idResidente}")
+	@GetMapping("/residente/{idResidente}")
 	public ResponseEntity<?> obtenerListasDeResidente(@PathVariable Integer idResidente) {
 		List<Lista> listas = this.servicioLista.obtenerListasPorIdResidente(idResidente);
 		if (listas.isEmpty()) {
@@ -38,9 +38,9 @@ public class ControladorLista {
 		return ResponseEntity.status(HttpStatus.CREATED).body(listaCreada);
 	}
 
-	@DeleteMapping("/{idLista}")
-	public ResponseEntity<?> eliminarLista(@PathVariable Integer idLista) {
-		this.servicioLista.eliminarPorId(idLista);
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> eliminarLista(@PathVariable Integer id) {
+		this.servicioLista.eliminarPorId(id);
 		return ResponseEntity.noContent().build();
 	}
 }
