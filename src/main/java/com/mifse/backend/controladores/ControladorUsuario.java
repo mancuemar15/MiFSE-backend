@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mifse.backend.persistencia.modelos.Usuario;
@@ -40,6 +41,16 @@ public class ControladorUsuario {
 		}
 
 		return ResponseEntity.ok(usuario);
+	}
+
+	@GetMapping("/verificar-correo-electronico")
+	public ResponseEntity<String> verificarCorreoElectronico(@RequestParam("id") Integer id) {
+		Boolean correoElectronicoVerificado = this.servicioUsuario.verificarCorreoElectronico(id);
+		if (correoElectronicoVerificado) {
+			return ResponseEntity.ok("Tu correo electrónico ha sido verificado correctamente");
+		} else {
+			return ResponseEntity.badRequest().body("El ID de verificación no es válido");
+		}
 	}
 
 	@PostMapping(path = "/login")

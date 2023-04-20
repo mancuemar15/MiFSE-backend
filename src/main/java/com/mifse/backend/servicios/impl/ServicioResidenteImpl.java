@@ -1,6 +1,8 @@
 package com.mifse.backend.servicios.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +23,28 @@ public class ServicioResidenteImpl implements ServicioResidente {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Autowired
+	private JavaMailSender mailSender;
+
 	@Override
 	public Residente guardar(Residente residente) {
 		residente.setContrasena(this.passwordEncoder.encode(residente.getContrasena()));
 		Residente residenteGuardado = this.repositorioResidente.save(residente);
-		return this.repositorioResidente.save(residenteGuardado);
+
+		this.enviarEmailVerificacion(residenteGuardado);
+
+		return residenteGuardado;
 	}
 
+	private void enviarEmailVerificacion(Residente residente) {
+		String asunto = residente.getNombre() + ", verifica tu correo electrónico";
+		String mensaje = "¡Bienvenid@ " + residente.getNombre()
+				+ "!\n\nPor favor, haz clic en el siguiente enlace para verificar tu correo electrónico: "
+				+ URL_VERIFICACION + residente.getId();
+		SimpleMailMessage correo = new SimpleMailMessage();
+		correo.setTo(residente.getEmail());
+		correo.setSubject(asunto);
+		correo.setText(mensaje);
+		this.mailSender.send(correo);
+	}
 }

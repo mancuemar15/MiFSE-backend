@@ -10,6 +10,8 @@ public interface ServicioUsuario {
 
 	public List<Usuario> obtenerTodos();
 
+	public Boolean verificarCorreoElectronico(Integer id);
+
 	public Usuario obtenerPorEmailYContrasena(String email, String contrasena);
 
 	public Boolean existeEmail(String email);

@@ -2,6 +2,7 @@ package com.mifse.backend.servicios.impl;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -33,6 +34,20 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 		return this.repositorioUsuario.findAll();
 	}
 
+	@Override
+	public Boolean verificarCorreoElectronico(Integer id) {
+		Optional<Usuario> optionalUsuario = this.repositorioUsuario.findById(id);
+		if (optionalUsuario.isPresent()) {
+			Usuario usuario = optionalUsuario.get();
+			if (!usuario.isVerificado()) {
+				usuario.setVerificado(true);
+				this.actualizar(usuario);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private Usuario obtenerPorEmail(String email) {
 		return this.repositorioUsuario.findByEmail(email);
 	}
@@ -50,7 +65,6 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	public Boolean existeEmail(String email) {
 		return this.repositorioUsuario.existsByEmail(email);
 	}
-
 
 	@Override
 	public void actualizar(Usuario usuario) {
