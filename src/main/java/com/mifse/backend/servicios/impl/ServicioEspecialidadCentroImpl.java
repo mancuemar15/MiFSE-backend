@@ -18,7 +18,7 @@ public class ServicioEspecialidadCentroImpl implements ServicioEspecialidadCentr
 	private RepositorioEspecialidadCentro repositorioEspecialidadCentro;
 
 	@Override
-	public List<EspecialidadCentro> obtenerTodos() {
+	public List<EspecialidadCentro> obtenerTodas() {
 		return this.repositorioEspecialidadCentro.findAll();
 	}
 
