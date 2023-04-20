@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 @Data
@@ -30,6 +32,7 @@ public class Centro {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_localidad", nullable = false)
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Localidad localidad;
 
 	@Column(name = "URL_imagen")
