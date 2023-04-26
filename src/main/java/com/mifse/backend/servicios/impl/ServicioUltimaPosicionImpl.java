@@ -18,8 +18,8 @@ public class ServicioUltimaPosicionImpl implements ServicioUltimaPosicion {
 	private RepositorioUltimaPosicion repositorioUltimaPosicion;
 
 	@Override
-	public List<UltimaPosicion> obtenerTodas() {
-		return this.repositorioUltimaPosicion.findAll();
+	public List<UltimaPosicion> obtenerTodasPorNombreTitulacion(String nombreTitulacion) {
+		return this.repositorioUltimaPosicion.findAllByEspecialidadTitulacionNombre(nombreTitulacion);
 	}
 
 }

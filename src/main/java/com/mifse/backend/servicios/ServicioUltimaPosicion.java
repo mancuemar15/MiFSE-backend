@@ -6,5 +6,5 @@ import com.mifse.backend.persistencia.modelos.UltimaPosicion;
 
 public interface ServicioUltimaPosicion {
 
-	public List<UltimaPosicion> obtenerTodas();
+	public List<UltimaPosicion> obtenerTodasPorNombreTitulacion(String nombreTitulacion);
 }
