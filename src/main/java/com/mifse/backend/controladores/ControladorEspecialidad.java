@@ -1,5 +1,7 @@
 package com.mifse.backend.controladores;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,17 @@ public class ControladorEspecialidad {
 	@GetMapping
 	public ResponseEntity<?> obtenerEspecialidades() {
 		return ResponseEntity.ok(this.servicioEspecialidad.obtenerTodas());
+	}
+
+	@GetMapping("/centro/{idCentro}")
+	public ResponseEntity<?> obtenerEspecialidadesPorIdCentro(@PathVariable Integer idCentro) {
+		List<Especialidad> especialidades = this.servicioEspecialidad.obtenerTodasPorIdCentro(idCentro);
+
+		if (especialidades.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(especialidades);
+		}
 	}
 
 	@GetMapping("/{id}")

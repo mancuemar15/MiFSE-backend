@@ -1,12 +1,11 @@
 package com.mifse.backend.persistencia.modelos;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -16,16 +15,16 @@ import lombok.Data;
 @Table(name = "especialidad_centro")
 public class EspecialidadCentro {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-	private Integer id;
+	@EmbeddedId
+	private EspecialidadCentroId id;
 
 	@ManyToOne
+	@MapsId("idEspecialidad")
 	@JoinColumn(name = "ID_especialidad")
 	private Especialidad especialidad;
 
 	@ManyToOne
+	@MapsId("idCentro")
 	@JoinColumn(name = "ID_centro")
 	private Centro centro;
 
@@ -70,5 +69,4 @@ public class EspecialidadCentro {
 
 	@Column(name = "Sueldo_maximo")
 	private Integer sueldoMaximo;
-
 }

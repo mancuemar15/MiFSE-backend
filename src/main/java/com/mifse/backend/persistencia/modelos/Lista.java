@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 @Data
@@ -25,6 +28,7 @@ public class Lista {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_residente", nullable = false)
+	@JsonIgnore
 	private Residente residente;
 
 	@Column(name = "Fecha_creacion", nullable = false)

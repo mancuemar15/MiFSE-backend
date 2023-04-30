@@ -23,6 +23,11 @@ public class ServicioEspecialidadImpl implements ServicioEspecialidad {
 	}
 
 	@Override
+	public List<Especialidad> obtenerTodasPorIdCentro(Integer idCentro) {
+		return this.repositorioEspecialidad.findAllByIdCentro(idCentro);
+	}
+
+	@Override
 	public Especialidad obtenerPorId(Integer id) {
 		return this.repositorioEspecialidad.findById(id).orElse(null);
 	}

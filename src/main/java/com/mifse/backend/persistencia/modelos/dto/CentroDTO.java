@@ -1,8 +1,13 @@
 package com.mifse.backend.persistencia.modelos.dto;
 
-public interface CentroDTO {
-	
-	Integer getId();
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-	String getNombre();
+@Data
+@AllArgsConstructor
+public class CentroDTO {
+
+	private Integer id;
+	
+	private String nombre;
 }

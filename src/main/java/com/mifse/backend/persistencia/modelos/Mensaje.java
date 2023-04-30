@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 @Data
@@ -25,10 +27,12 @@ public class Mensaje {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_usuario_emisor", nullable = false)
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Usuario emisor;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_usuario_receptor", nullable = false)
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Usuario receptor;
 
 	@Column(name = "Contenido", nullable = false, columnDefinition = "TEXT")

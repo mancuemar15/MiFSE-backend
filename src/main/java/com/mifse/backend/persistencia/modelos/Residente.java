@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,10 +27,12 @@ public class Residente extends Usuario {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_tipo_residente")
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private TipoResidente tipoResidente;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_titulacion")
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Titulacion titulacion;
 
 }

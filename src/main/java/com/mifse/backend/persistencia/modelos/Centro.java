@@ -49,4 +49,5 @@ public class Centro {
 
 	@Column(name = "Latitud", nullable = false)
 	private Double latitud;
+
 }

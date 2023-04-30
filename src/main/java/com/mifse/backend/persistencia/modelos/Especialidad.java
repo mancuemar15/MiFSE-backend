@@ -15,15 +15,14 @@ import lombok.Data;
 @Entity
 @Table(name = "especialidad")
 public class Especialidad {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    @Column(name = "Nombre")
-    private String nombre;
+	@Column(name = "Nombre")
+	private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_titulacion")
-    private Titulacion titulacion;
+	@ManyToOne
+	@JoinColumn(name = "ID_titulacion")
+	private Titulacion titulacion;
 }
-

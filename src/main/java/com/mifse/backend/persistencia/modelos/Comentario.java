@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 @Data
@@ -25,10 +28,12 @@ public class Comentario {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_residente")
+	@JsonIgnore
 	private Residente residente;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_centro")
+	@JsonIgnore
 	private Centro centro;
 
 	@Column(name = "Contenido", nullable = false)
