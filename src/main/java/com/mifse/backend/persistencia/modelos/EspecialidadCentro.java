@@ -60,9 +60,6 @@ public class EspecialidadCentro {
 	@Column(name = "Numero_meses_rotacion_externa")
 	private Integer numeroMesesRotacionExterna;
 
-	@Column(name = "Sueldo_minimo")
-	private Integer sueldoMinimo;
-
-	@Column(name = "Sueldo_maximo")
-	private Integer sueldoMaximo;
+	@Column(name = "Sueldo")
+	private Integer sueldo;
 }
