@@ -57,9 +57,6 @@ public class EspecialidadCentro {
 	@Column(name = "Hay_rotaciones_externas")
 	private Boolean hayRotacionesExternas;
 
-	@Column(name = "Numero_meses_rotacion_externa")
-	private Integer numeroMesesRotacionExterna;
-
 	@Column(name = "Sueldo")
 	private Integer sueldo;
 }
