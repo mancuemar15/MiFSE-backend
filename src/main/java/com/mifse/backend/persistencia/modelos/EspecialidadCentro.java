@@ -47,10 +47,6 @@ public class EspecialidadCentro {
 	@Column(name = "Numero_dias_libre_disposicion")
 	private Integer numeroDiasLibreDisposicion;
 
-	@ManyToOne
-	@JoinColumn(name = "ID_epoca_vacaciones")
-	private EpocaVacaciones epocaVacaciones;
-
 	@Column(name = "Numero_guardias_mes")
 	private Integer numeroGuardiasMes;
 
