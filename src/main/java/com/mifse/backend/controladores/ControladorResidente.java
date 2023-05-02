@@ -1,6 +1,9 @@
 package com.mifse.backend.controladores;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +22,10 @@ public class ControladorResidente {
 
 	@PostMapping
 	public ResponseEntity<?> guardarResidente(@RequestBody Residente residente) {
-		return ResponseEntity.ok(this.servicioResidente.guardar(residente));
+		try {
+			return ResponseEntity.ok(this.servicioResidente.guardar(residente));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
 	}
 }

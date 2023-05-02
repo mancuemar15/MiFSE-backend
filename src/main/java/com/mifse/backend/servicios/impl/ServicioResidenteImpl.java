@@ -1,6 +1,10 @@
 package com.mifse.backend.servicios.impl;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,13 +31,17 @@ public class ServicioResidenteImpl implements ServicioResidente {
 	private JavaMailSender mailSender;
 
 	@Override
-	public Residente guardar(Residente residente) {
-		residente.setContrasena(this.passwordEncoder.encode(residente.getContrasena()));
-		Residente residenteGuardado = this.repositorioResidente.save(residente);
+	public Residente guardar(Residente residente) throws Exception {
+		try {
+			residente.setContrasena(this.passwordEncoder.encode(residente.getContrasena()));
+			Residente residenteGuardado = this.repositorioResidente.save(residente);
 
-		this.enviarEmailVerificacion(residenteGuardado);
+			this.enviarEmailVerificacion(residenteGuardado);
 
-		return residenteGuardado;
+			return residenteGuardado;
+		} catch (ConstraintViolationException e) {
+			throw new Exception("Ya existe un residente con ese email");
+		}
 	}
 
 	private void enviarEmailVerificacion(Residente residente) {

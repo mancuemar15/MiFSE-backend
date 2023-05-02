@@ -1,5 +1,7 @@
 package com.mifse.backend.persistencia.modelos;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -49,5 +52,8 @@ public class Centro {
 
 	@Column(name = "Latitud", nullable = false)
 	private Double latitud;
+
+	@OneToMany(mappedBy = "centro")
+	private List<Comentario> comentarios;
 
 }

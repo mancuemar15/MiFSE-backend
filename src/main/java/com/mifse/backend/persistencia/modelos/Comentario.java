@@ -28,7 +28,6 @@ public class Comentario {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_residente")
-	@JsonIgnore
 	private Residente residente;
 
 	@ManyToOne
