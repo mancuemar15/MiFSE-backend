@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mifse.backend.servicios.ServicioTipoTrabajoFinResidencia;
 
 @RestController
-@RequestMapping(path = "/tipos-trabajos-fin-residencia")
+@RequestMapping(path = "/tipos-trabajos")
 public class ControladorTipoTrabajoFinResidencia {
 
 	@Autowired

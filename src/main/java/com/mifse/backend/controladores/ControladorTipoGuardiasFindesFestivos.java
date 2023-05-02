@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mifse.backend.servicios.ServicioTipoGuardiasFindesFestivos;
 
 @RestController
-@RequestMapping(path = "/tipos-guardias-findes-festivos")
+@RequestMapping(path = "/tipos-guardias")
 public class ControladorTipoGuardiasFindesFestivos {
 
 	@Autowired
