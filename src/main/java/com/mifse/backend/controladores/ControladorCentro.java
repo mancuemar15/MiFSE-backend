@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mifse.backend.persistencia.modelos.Centro;
-import com.mifse.backend.persistencia.modelos.dto.CentroDTO;
+import com.mifse.backend.persistencia.modelos.dto.CentroIdNombreDTO;
 import com.mifse.backend.servicios.ServicioCentro;
 
 @RestController
@@ -32,7 +32,7 @@ public class ControladorCentro {
 
 	@GetMapping("/buscar/{nombre}")
 	public ResponseEntity<?> obtenerCentrosPorNombre(@PathVariable String nombre) {
-		List<CentroDTO> centros = this.servicioCentro.obtenerPorNombre(nombre);
+		List<CentroIdNombreDTO> centros = this.servicioCentro.obtenerPorNombre(nombre);
 		if (centros.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}

@@ -55,5 +55,4 @@ public class Centro {
 
 	@OneToMany(mappedBy = "centro")
 	private List<Comentario> comentarios;
-
 }

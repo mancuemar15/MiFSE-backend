@@ -1,6 +1,7 @@
 package com.mifse.backend.persistencia.modelos;
 
-import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,13 +30,15 @@ public class Lista {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_residente", nullable = false)
-	@JsonIgnore
 	private Residente residente;
 
 	@Column(name = "Fecha_creacion", nullable = false)
-	private LocalDateTime fechaCreacion;
+	private Date fechaCreacion;
 
 	@Column(name = "Fecha_actualizacion", nullable = false)
-	private LocalDateTime fechaActualizacion;
+	private Date fechaActualizacion;
+
+	@OneToMany(mappedBy = "lista")
+	private List<Preferencia> preferencias;
 
 }

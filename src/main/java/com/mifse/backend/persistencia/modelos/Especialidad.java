@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Data
@@ -24,5 +26,6 @@ public class Especialidad {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_titulacion")
+	@JsonIgnore
 	private Titulacion titulacion;
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mifse.backend.persistencia.modelos.Centro;
-import com.mifse.backend.persistencia.modelos.dto.CentroDTO;
+import com.mifse.backend.persistencia.modelos.dto.CentroIdNombreDTO;
 import com.mifse.backend.persistencia.repositorios.RepositorioCentro;
 import com.mifse.backend.servicios.ServicioCentro;
 
@@ -24,7 +24,7 @@ public class ServicioCentroImpl implements ServicioCentro {
 	}
 
 	@Override
-	public List<CentroDTO> obtenerPorNombre(String nombre) {
+	public List<CentroIdNombreDTO> obtenerPorNombre(String nombre) {
 		return this.repositorioCentro.findByNombreContainingIgnoreCase(nombre);
 	}
 

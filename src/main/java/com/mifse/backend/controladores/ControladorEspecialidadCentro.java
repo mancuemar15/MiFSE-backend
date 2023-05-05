@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,17 @@ public class ControladorEspecialidadCentro {
 	@GetMapping
 	public ResponseEntity<?> obtenerTodasEspecialidadesCentros() {
 		List<EspecialidadCentro> especialidadesCentros = this.servicioEspecialidadCentro.obtenerTodas();
+		if (especialidadesCentros.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(especialidadesCentros);
+	}
+
+	@GetMapping("/{nombreTitulacion}")
+	public ResponseEntity<?> obtenerTodasEspecialidadesCentrosPorNombreTitulacion(
+			@PathVariable String nombreTitulacion) {
+		List<EspecialidadCentro> especialidadesCentros = this.servicioEspecialidadCentro
+				.obtenerTodasPorNombreTitulacion(nombreTitulacion);
 		if (especialidadesCentros.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}

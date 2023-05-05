@@ -22,4 +22,9 @@ public class ServicioEspecialidadCentroImpl implements ServicioEspecialidadCentr
 		return this.repositorioEspecialidadCentro.findAll();
 	}
 
+	@Override
+	public List<EspecialidadCentro> obtenerTodasPorNombreTitulacion(String nombreTitulacion) {
+		return this.repositorioEspecialidadCentro.findAllByEspecialidadTitulacionNombre(nombreTitulacion);
+	}
+
 }

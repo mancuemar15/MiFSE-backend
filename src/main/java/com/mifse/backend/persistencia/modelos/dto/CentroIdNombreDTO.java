@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CentroDTO {
+public class CentroIdNombreDTO {
 
 	private Integer id;
 	

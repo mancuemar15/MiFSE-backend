@@ -7,4 +7,6 @@ import com.mifse.backend.persistencia.modelos.EspecialidadCentro;
 public interface ServicioEspecialidadCentro {
 
 	List<EspecialidadCentro> obtenerTodas();
+
+	List<EspecialidadCentro> obtenerTodasPorNombreTitulacion(String nombreTitulacion);
 }
