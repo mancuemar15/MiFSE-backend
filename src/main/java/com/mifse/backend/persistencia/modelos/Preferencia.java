@@ -36,10 +36,10 @@ public class Preferencia {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumns({ @JoinColumn(name = "ID_especialidad", referencedColumnName = "ID_especialidad"),
 			@JoinColumn(name = "ID_centro", referencedColumnName = "ID_centro") })
-	@JsonView(Vistas.CentroSimplificado.class)
+	@JsonView(Vistas.Lista.class)
 	private EspecialidadCentro especialidadCentro;
 
 	@Column(name = "Numero")
-	@JsonView(Vistas.CentroSimplificado.class)
+	@JsonView(Vistas.Lista.class)
 	private Integer numero;
 }

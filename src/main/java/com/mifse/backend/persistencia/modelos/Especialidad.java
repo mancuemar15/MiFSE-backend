@@ -23,11 +23,11 @@ public class Especialidad {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView(Vistas.CentroSimplificado.class)
+	@JsonView(Vistas.Lista.class)
 	private Integer id;
 
 	@Column(name = "Nombre")
-	@JsonView(Vistas.CentroSimplificado.class)
+	@JsonView(Vistas.Lista.class)
 	private String nombre;
 
 	@ManyToOne(fetch = FetchType.EAGER)

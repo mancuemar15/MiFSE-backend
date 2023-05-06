@@ -26,7 +26,7 @@ public class Residente extends Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView(Vistas.CentroSimplificado.class)
+	@JsonView(Vistas.Lista.class)
 	private Integer id;
 
 	@ManyToOne(fetch = FetchType.EAGER)

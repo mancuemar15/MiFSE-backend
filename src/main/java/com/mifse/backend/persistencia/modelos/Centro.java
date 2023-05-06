@@ -26,11 +26,11 @@ public class Centro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	@JsonView(Vistas.CentroSimplificado.class)
+	@JsonView(Vistas.Lista.class)
 	private Integer id;
 
 	@Column(name = "Nombre", nullable = false)
-	@JsonView(Vistas.CentroSimplificado.class)
+	@JsonView(Vistas.Lista.class)
 	private String nombre;
 
 	@Column(name = "Direccion", nullable = false)

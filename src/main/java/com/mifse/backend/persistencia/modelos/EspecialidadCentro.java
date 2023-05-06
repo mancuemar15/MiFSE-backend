@@ -23,13 +23,13 @@ public class EspecialidadCentro {
 	@Id
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_especialidad")
-	@JsonView(Vistas.CentroSimplificado.class)
+	@JsonView(Vistas.Lista.class)
 	private Especialidad especialidad;
 
 	@Id
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_centro")
-	@JsonView(Vistas.CentroSimplificado.class)
+	@JsonView(Vistas.Lista.class)
 	private Centro centro;
 
 	@Column(name = "Necesidad_coche")

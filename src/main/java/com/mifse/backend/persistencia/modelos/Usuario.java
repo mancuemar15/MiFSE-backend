@@ -29,7 +29,7 @@ import lombok.Data;
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView(Vistas.CentroSimplificado.class)
+	@JsonView(Vistas.Lista.class)
 	private Integer id;
 
 	@Column(name = "Nombre")

@@ -25,7 +25,7 @@ public class ControladorLista {
 	@Autowired
 	private ServicioLista servicioLista;
 
-	@JsonView(Vistas.CentroSimplificado.class)
+	@JsonView(Vistas.Lista.class)
 	@GetMapping("/residente/{idResidente}")
 	public ResponseEntity<?> obtenerListasDeResidente(@PathVariable Integer idResidente) {
 		List<Lista> listas = this.servicioLista.obtenerListasPorIdResidente(idResidente);
@@ -35,7 +35,7 @@ public class ControladorLista {
 		return ResponseEntity.ok(listas);
 	}
 
-	@JsonView(Vistas.CentroSimplificado.class)
+	@JsonView(Vistas.Lista.class)
 	@PostMapping
 	public ResponseEntity<?> crearLista(@RequestBody Lista lista) {
 		Lista listaCreada = this.servicioLista.guardar(lista);

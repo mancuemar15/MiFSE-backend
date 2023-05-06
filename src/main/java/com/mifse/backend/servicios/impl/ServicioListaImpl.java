@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mifse.backend.persistencia.modelos.Lista;
-import com.mifse.backend.persistencia.modelos.Preferencia;
 import com.mifse.backend.persistencia.repositorios.RepositorioLista;
 import com.mifse.backend.servicios.ServicioLista;
 
@@ -26,19 +25,15 @@ public class ServicioListaImpl implements ServicioLista {
 
 	@Override
 	public Lista guardar(Lista lista) {
-		final Lista nuevaLista = Lista.builder().residente(lista.getResidente()).fechaCreacion(lista.getFechaCreacion())
-				.fechaActualizacion(lista.getFechaActualizacion()).build();
+		final Lista listaGuardada = this.repositorioLista
+				.save(Lista.builder().residente(lista.getResidente()).fechaCreacion(lista.getFechaCreacion())
+						.fechaActualizacion(lista.getFechaActualizacion()).nombre(lista.getNombre()).build());
+		listaGuardada.setPreferencias(lista.getPreferencias().stream().map(p -> {
+			p.setLista(listaGuardada);
+			return p;
+		}).collect(Collectors.toList()));
 
-		if (lista.getId() == null) {
-			final Lista listaGuardada = this.repositorioLista.save(nuevaLista);
-			List<Preferencia> preferencias = lista.getPreferencias().stream().map(p -> {
-				p.setLista(listaGuardada);
-				return p;
-			}).collect(Collectors.toList());
-			nuevaLista.setPreferencias(preferencias);
-		}
-
-		return this.repositorioLista.save(nuevaLista);
+		return this.repositorioLista.save(listaGuardada);
 	}
 
 	@Override
