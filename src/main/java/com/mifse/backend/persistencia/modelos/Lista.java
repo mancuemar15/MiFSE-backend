@@ -41,6 +41,10 @@ public class Lista {
 	@JoinColumn(name = "ID_residente", nullable = false)
 	@JsonView(Vistas.CentroSimplificado.class)
 	private Residente residente;
+	
+	@Column(name = "Nombre", nullable = false)
+	@JsonView(Vistas.CentroSimplificado.class)
+	private String nombre;
 
 	@Column(name = "Fecha_creacion", nullable = false)
 	@JsonView(Vistas.CentroSimplificado.class)
