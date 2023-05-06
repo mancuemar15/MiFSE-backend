@@ -13,7 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.mifse.backend.vistas.Vistas;
 
 import lombok.Data;
 
@@ -25,17 +26,18 @@ public class Centro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
+	@JsonView(Vistas.CentroSimplificado.class)
 	private Integer id;
 
 	@Column(name = "Nombre", nullable = false)
+	@JsonView(Vistas.CentroSimplificado.class)
 	private String nombre;
 
 	@Column(name = "Direccion", nullable = false)
 	private String direccion;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_localidad", nullable = false)
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Localidad localidad;
 
 	@Column(name = "URL_imagen")

@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.mifse.backend.persistencia.modelos.Lista;
 import com.mifse.backend.servicios.ServicioLista;
+import com.mifse.backend.vistas.Vistas;
 
 @RestController
 @RequestMapping("/listas")
@@ -23,6 +25,7 @@ public class ControladorLista {
 	@Autowired
 	private ServicioLista servicioLista;
 
+	@JsonView(Vistas.CentroSimplificado.class)
 	@GetMapping("/residente/{idResidente}")
 	public ResponseEntity<?> obtenerListasDeResidente(@PathVariable Integer idResidente) {
 		List<Lista> listas = this.servicioLista.obtenerListasPorIdResidente(idResidente);
@@ -32,6 +35,7 @@ public class ControladorLista {
 		return ResponseEntity.ok(listas);
 	}
 
+	@JsonView(Vistas.CentroSimplificado.class)
 	@PostMapping
 	public ResponseEntity<?> crearLista(@RequestBody Lista lista) {
 		Lista listaCreada = this.servicioLista.guardar(lista);

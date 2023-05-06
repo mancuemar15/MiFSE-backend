@@ -2,21 +2,19 @@ package com.mifse.backend.persistencia.modelos;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.mifse.backend.vistas.Vistas;
 
 import lombok.Data;
 
 @Data
-@Embeddable
+@JsonView(Vistas.CentroSimplificado.class)
 public class EspecialidadCentroId implements Serializable {
 
 	private static final long serialVersionUID = -8565513644282660450L;
 	
-	@Column(name = "ID_especialidad")
-	private Integer idEspecialidad;
+	private Integer especialidad;
 	
-	@Column(name = "ID_centro")
-	private Integer idCentro;
+	private Integer centro;
 
 }

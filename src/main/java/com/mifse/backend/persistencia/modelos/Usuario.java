@@ -17,6 +17,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.mifse.backend.vistas.Vistas;
 
 import lombok.Data;
 
@@ -27,6 +29,7 @@ import lombok.Data;
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Vistas.CentroSimplificado.class)
 	private Integer id;
 
 	@Column(name = "Nombre")
@@ -54,8 +57,7 @@ public class Usuario {
 	@Column(name = "Inhabilitado")
 	private boolean inhabilitado;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_tipo_usuario")
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private TipoUsuario tipoUsuario;
 }

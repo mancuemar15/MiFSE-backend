@@ -1,37 +1,41 @@
 package com.mifse.backend.persistencia.modelos;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonView;
+import com.mifse.backend.vistas.Vistas;
 
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "especialidad_centro")
+@IdClass(EspecialidadCentroId.class)
 public class EspecialidadCentro {
 
-	@EmbeddedId
-	private EspecialidadCentroId id;
-
-	@ManyToOne
-	@MapsId("idEspecialidad")
+	@Id
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_especialidad")
+	@JsonView(Vistas.CentroSimplificado.class)
 	private Especialidad especialidad;
 
-	@ManyToOne
-	@MapsId("idCentro")
+	@Id
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_centro")
+	@JsonView(Vistas.CentroSimplificado.class)
 	private Centro centro;
 
 	@Column(name = "Necesidad_coche")
 	private Boolean necesidadCoche;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_tipo_trabajo_fin_residencia")
 	private TipoTrabajoFinResidencia tipoTrabajoFinResidencia;
 
@@ -50,7 +54,7 @@ public class EspecialidadCentro {
 	@Column(name = "Numero_guardias_mes")
 	private Integer numeroGuardiasMes;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_tipo_guardias_findes_festivos")
 	private TipoGuardiasFindesFestivos tipoGuardiasFindesFestivos;
 

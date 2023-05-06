@@ -10,6 +10,6 @@ import com.mifse.backend.persistencia.modelos.Especialidad;
 
 public interface RepositorioEspecialidad extends JpaRepository<Especialidad, Integer> {
 
-	@Query("SELECT e, t FROM EspecialidadCentro ec JOIN ec.especialidad e JOIN e.titulacion t WHERE ec.id.idCentro = :idCentro")
+	@Query("SELECT e, t FROM EspecialidadCentro ec JOIN ec.especialidad e JOIN e.titulacion t WHERE ec.centro = :idCentro")
 	public List<Especialidad> findAllByIdCentro(@Param("idCentro") Integer idCentro);
 }
