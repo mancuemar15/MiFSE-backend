@@ -7,11 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.mifse.backend.vistas.Vistas;
+
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "tipo_guardias_findes_festivos")
+@JsonView(Vistas.Lista.class)
 public class TipoGuardiasFindesFestivos {
 
 	@Id

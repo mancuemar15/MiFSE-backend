@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.mifse.backend.vistas.Vistas;
 
@@ -20,18 +19,18 @@ import lombok.Data;
 @Entity
 @Table(name = "especialidad")
 public class Especialidad {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView(Vistas.Lista.class)
+	@JsonView({Vistas.ListaPreferencias.class, Vistas.Lista.class})
 	private Integer id;
 
 	@Column(name = "Nombre")
-	@JsonView(Vistas.Lista.class)
+	@JsonView({Vistas.ListaPreferencias.class, Vistas.Lista.class})
 	private String nombre;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_titulacion")
-	@JsonIgnore
+	@JsonView(Vistas.ListaPreferencias.class)
 	private Titulacion titulacion;
 }

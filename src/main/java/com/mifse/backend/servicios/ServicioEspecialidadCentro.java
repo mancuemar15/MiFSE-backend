@@ -9,4 +9,6 @@ public interface ServicioEspecialidadCentro {
 	List<EspecialidadCentro> obtenerTodas();
 
 	List<EspecialidadCentro> obtenerTodasPorNombreTitulacion(String nombreTitulacion);
+	
+	List<EspecialidadCentro> obtenerTodasPorIdLista(Integer idLista);
 }

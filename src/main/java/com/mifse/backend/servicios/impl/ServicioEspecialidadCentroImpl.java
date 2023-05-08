@@ -27,4 +27,9 @@ public class ServicioEspecialidadCentroImpl implements ServicioEspecialidadCentr
 		return this.repositorioEspecialidadCentro.findAllByEspecialidadTitulacionNombre(nombreTitulacion);
 	}
 
+	@Override
+	public List<EspecialidadCentro> obtenerTodasPorIdLista(Integer idLista) {
+		return this.repositorioEspecialidadCentro.findAllByIdLista(idLista);
+	}
+
 }

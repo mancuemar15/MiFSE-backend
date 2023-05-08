@@ -8,7 +8,7 @@ import com.mifse.backend.vistas.Vistas;
 import lombok.Data;
 
 @Data
-@JsonView(Vistas.Lista.class)
+@JsonView(Vistas.ListaPreferencias.class)
 public class PreferenciaId implements Serializable {
 
 	private static final long serialVersionUID = -8802597742036545209L;

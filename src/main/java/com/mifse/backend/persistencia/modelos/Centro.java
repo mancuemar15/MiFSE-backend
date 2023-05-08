@@ -26,11 +26,11 @@ public class Centro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	@JsonView(Vistas.Lista.class)
+	@JsonView({Vistas.ListaPreferencias.class, Vistas.Lista.class})
 	private Integer id;
 
 	@Column(name = "Nombre", nullable = false)
-	@JsonView(Vistas.Lista.class)
+	@JsonView({Vistas.ListaPreferencias.class, Vistas.Lista.class})
 	private String nombre;
 
 	@Column(name = "Direccion", nullable = false)
@@ -38,12 +38,14 @@ public class Centro {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_localidad", nullable = false)
+	@JsonView(Vistas.Lista.class)
 	private Localidad localidad;
 
 	@Column(name = "URL_imagen")
 	private Integer urlImagen;
 
 	@Column(name = "Valoracion_media")
+	@JsonView(Vistas.Lista.class)
 	private Double valoracionMedia;
 
 	@Column(name = "Descripcion", nullable = false)

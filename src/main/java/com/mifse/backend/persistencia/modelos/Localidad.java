@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.mifse.backend.vistas.Vistas;
 
 import lombok.Data;
 
@@ -33,6 +35,7 @@ public class Localidad {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_provincia", nullable = false)
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	@JsonView(Vistas.Lista.class)
 	private Provincia provincia;
 
 }
