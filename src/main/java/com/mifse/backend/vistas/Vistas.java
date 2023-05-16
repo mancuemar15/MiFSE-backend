@@ -7,4 +7,16 @@ public class Vistas {
 
 	public class Lista {
 	}
+
+	public class ListaExtendida {
+	}
+
+	public class Conversacion {
+	}
+
+	public class Centro {
+	}
+
+	public class Comentario {
+	}
 }
