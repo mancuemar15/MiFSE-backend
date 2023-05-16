@@ -16,7 +16,8 @@ public interface ServicioUsuario {
 
 	public Boolean existeEmail(String email);
 
-	public void actualizar(Usuario usuario);
+	public Usuario actualizar(Usuario usuario);
 
-	public void eliminarPorId(Integer id);
+	public Usuario bloquear(Integer id);
+
 }

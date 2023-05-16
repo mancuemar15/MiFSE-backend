@@ -1,11 +1,9 @@
 package com.mifse.backend.servicios.impl;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +53,7 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	@Override
 	public Usuario obtenerPorEmailYContrasena(String email, String contrasena) {
 		Usuario usuario = this.obtenerPorEmail(email);
+		System.out.println(this.passwordEncoder.matches(contrasena, usuario.getContrasena()));
 		if (this.passwordEncoder.matches(contrasena, usuario.getContrasena())) {
 			return usuario;
 		}
@@ -67,20 +66,23 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	}
 
 	@Override
-	public void actualizar(Usuario usuario) {
-		if (usuario.getId() == null) {
-			throw new IllegalArgumentException("El usuario no tiene un ID válido");
-		}
+	public Usuario actualizar(Usuario usuario) {
+		Usuario usuarioAActualizar = this.obtenerPorId(usuario.getId());
 
-		this.repositorioUsuario.save(usuario);
+		usuarioAActualizar.setNombre(usuario.getNombre());
+		usuarioAActualizar.setApellido1(usuario.getApellido1());
+		usuarioAActualizar.setEmail(usuario.getEmail());
+//		usuarioAActualizar.setNombre(usuario.getNombre());
+
+		return this.repositorioUsuario.save(usuarioAActualizar);
 	}
 
 	@Override
-	public void eliminarPorId(Integer id) {
-		try {
-			this.repositorioUsuario.deleteById(id);
-		} catch (EmptyResultDataAccessException e) {
-			throw new NoSuchElementException("No se encontró ninguna entidad con el ID proporcionado: " + id);
-		}
+	public Usuario bloquear(Integer id) {
+		Usuario usuarioABloquear = this.obtenerPorId(id);
+
+		usuarioABloquear.setInhabilitado(true);
+
+		return this.repositorioUsuario.save(usuarioABloquear);
 	}
 }

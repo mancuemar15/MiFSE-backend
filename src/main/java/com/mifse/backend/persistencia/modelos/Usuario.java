@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.mifse.backend.vistas.Vistas;
 
@@ -27,18 +26,22 @@ import lombok.Data;
 @Table(name = "usuario")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView(Vistas.ListaPreferencias.class)
+	@JsonView({ Vistas.ListaPreferencias.class, Vistas.Centro.class, Vistas.Comentario.class })
 	private Integer id;
 
 	@Column(name = "Nombre")
+	@JsonView({ Vistas.Conversacion.class, Vistas.Centro.class, Vistas.Comentario.class })
 	private String nombre;
 
 	@Column(name = "Apellido_1")
+	@JsonView({ Vistas.Conversacion.class, Vistas.Centro.class, Vistas.Comentario.class })
 	private String apellido1;
 
 	@Column(name = "Apellido_2")
+	@JsonView({ Vistas.Conversacion.class, Vistas.Centro.class, Vistas.Comentario.class })
 	private String apellido2;
 
 	@Column(name = "Email", unique = true)
