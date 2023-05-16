@@ -37,19 +37,19 @@ public class ControladorEspecialidadCentro {
 		List<EspecialidadCentro> especialidadesCentros = this.servicioEspecialidadCentro
 				.obtenerTodasPorNombreTitulacion(nombreTitulacion);
 		if (especialidadesCentros.isEmpty()) {
-			return ResponseEntity.noContent().build();
+			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(especialidadesCentros);
 	}
 
-	@JsonView(Vistas.Lista.class)
-	@GetMapping("/lista/{idLista}")
-	public ResponseEntity<?> obtenerTodasEspecialidadesCentrosPorIdLista(@PathVariable Integer idLista) {
-		List<EspecialidadCentro> especialidadesCentros = this.servicioEspecialidadCentro
-				.obtenerTodasPorIdLista(idLista);
-		if (especialidadesCentros.isEmpty()) {
-			return ResponseEntity.noContent().build();
-		}
-		return ResponseEntity.ok(especialidadesCentros);
-	}
+//	@JsonView(Vistas.Lista.class)
+//	@GetMapping("/lista/{idLista}")
+//	public ResponseEntity<?> obtenerTodasEspecialidadesCentrosPorIdLista(@PathVariable Integer idLista) {
+//		List<EspecialidadCentro> especialidadesCentros = this.servicioEspecialidadCentro
+//				.obtenerTodasPorIdLista(idLista);
+//		if (especialidadesCentros.isEmpty()) {
+//			return ResponseEntity.notFound().build();
+//		}
+//		return ResponseEntity.ok(especialidadesCentros);
+//	}
 }
