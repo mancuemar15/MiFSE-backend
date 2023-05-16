@@ -34,28 +34,28 @@ public class Lista {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	@JsonView(Vistas.ListaPreferencias.class)
+	@JsonView({Vistas.ListaPreferencias.class, Vistas.ListaExtendida.class})
 	private Integer id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_residente", nullable = false)
-	@JsonView(Vistas.ListaPreferencias.class)
+	@JsonView({Vistas.ListaPreferencias.class, Vistas.ListaExtendida.class})
 	private Residente residente;
 
 	@Column(name = "Nombre")
-	@JsonView(Vistas.ListaPreferencias.class)
+	@JsonView({Vistas.ListaPreferencias.class, Vistas.ListaExtendida.class})
 	private String nombre;
 
 	@Column(name = "Fecha_creacion")
-	@JsonView(Vistas.ListaPreferencias.class)
+	@JsonView({Vistas.ListaPreferencias.class, Vistas.ListaExtendida.class})
 	private Date fechaCreacion;
 
 	@Column(name = "Fecha_actualizacion")
-	@JsonView(Vistas.ListaPreferencias.class)
+	@JsonView({Vistas.ListaPreferencias.class, Vistas.ListaExtendida.class})
 	private Date fechaActualizacion;
 
 	@OneToMany(mappedBy = "lista", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonView(Vistas.ListaPreferencias.class)
+	@JsonView({Vistas.ListaPreferencias.class, Vistas.ListaExtendida.class})
 	private List<Preferencia> preferencias;
 
 }

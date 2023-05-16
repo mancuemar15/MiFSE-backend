@@ -26,9 +26,19 @@ public class ControladorLista {
 	@Autowired
 	private ServicioLista servicioLista;
 
-	@JsonView(Vistas.ListaPreferencias.class)
+	@JsonView(Vistas.ListaExtendida.class)
 	@GetMapping("/{id}")
 	public ResponseEntity<?> obtenerListaPorId(@PathVariable Integer id) {
+		Lista lista = this.servicioLista.obtenerPorIdOrdenadoPorNumeroPreferencia(id);
+		if (lista == null) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(lista);
+	}
+
+	@JsonView(Vistas.ListaPreferencias.class)
+	@GetMapping("/{id}/preferencias")
+	public ResponseEntity<?> obtenerListaPreferenciasPorId(@PathVariable Integer id) {
 		Lista lista = this.servicioLista.obtenerPorIdOrdenadoPorNumeroPreferencia(id);
 		if (lista == null) {
 			return ResponseEntity.noContent().build();
@@ -52,7 +62,7 @@ public class ControladorLista {
 		Lista listaCreada = this.servicioLista.guardar(lista);
 		return ResponseEntity.status(HttpStatus.CREATED).body(listaCreada);
 	}
-	
+
 	@JsonView(Vistas.ListaPreferencias.class)
 	@PutMapping
 	public ResponseEntity<?> actualizarLista(@RequestBody Lista lista) {

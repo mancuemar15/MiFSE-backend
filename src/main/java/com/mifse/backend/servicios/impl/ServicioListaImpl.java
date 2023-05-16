@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mifse.backend.persistencia.modelos.Lista;
 import com.mifse.backend.persistencia.modelos.Preferencia;
 import com.mifse.backend.persistencia.repositorios.RepositorioLista;
-import com.mifse.backend.persistencia.repositorios.RepositorioPreferencia;
 import com.mifse.backend.servicios.ServicioLista;
 
 @Service
@@ -57,7 +56,7 @@ public class ServicioListaImpl implements ServicioLista {
 		// Eliminar preferencias existentes
 		listaAActualizar.getPreferencias().clear();
 
-		// Actualizar campos de la lista
+		listaAActualizar.setNombre(lista.getNombre());
 		listaAActualizar.setFechaActualizacion(lista.getFechaActualizacion());
 
 		// Agregar preferencias actualizadas
