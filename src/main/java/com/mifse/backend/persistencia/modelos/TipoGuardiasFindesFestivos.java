@@ -15,7 +15,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "tipo_guardias_findes_festivos")
-@JsonView(Vistas.Lista.class)
+@JsonView({Vistas.Lista.class, Vistas.ListaExtendida.class})
 public class TipoGuardiasFindesFestivos {
 
 	@Id

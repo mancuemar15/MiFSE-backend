@@ -1,6 +1,5 @@
 package com.mifse.backend.persistencia.modelos;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,10 +39,10 @@ public class Preferencia {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumns({ @JoinColumn(name = "ID_especialidad", referencedColumnName = "ID_especialidad"),
 			@JoinColumn(name = "ID_centro", referencedColumnName = "ID_centro") })
-	@JsonView(Vistas.ListaPreferencias.class)
+	@JsonView({Vistas.ListaPreferencias.class, Vistas.ListaExtendida.class})
 	private EspecialidadCentro especialidadCentro;
 
 	@Column(name = "Numero")
-	@JsonView(Vistas.ListaPreferencias.class)
+	@JsonView({Vistas.ListaPreferencias.class, Vistas.ListaExtendida.class})
 	private Integer numero;
 }

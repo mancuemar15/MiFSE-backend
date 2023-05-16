@@ -20,17 +20,19 @@ import lombok.Data;
 @Entity
 @Table(name = "provincia")
 public class Provincia {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Integer id;
 
 	@Column(name = "Nombre")
+	@JsonView(Vistas.Centro.class)
 	private String nombre;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_autonomia", referencedColumnName = "ID")
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	@JsonView(Vistas.Lista.class)
+	@JsonView({Vistas.Lista.class, Vistas.ListaExtendida.class, Vistas.Centro.class})
 	private Autonomia autonomia;
 }

@@ -15,7 +15,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "tipo_trabajo_fin_residencia")
-@JsonView(Vistas.Lista.class)
+@JsonView({Vistas.Lista.class, Vistas.ListaExtendida.class})
 public class TipoTrabajoFinResidencia {
 
 	@Id

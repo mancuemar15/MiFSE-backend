@@ -7,11 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.mifse.backend.vistas.Vistas;
+
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "tipo_residente")
+@JsonView({ Vistas.Conversacion.class, Vistas.Centro.class, Vistas.Comentario.class })
 public class TipoResidente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

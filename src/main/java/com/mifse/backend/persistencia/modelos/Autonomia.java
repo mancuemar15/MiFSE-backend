@@ -15,9 +15,9 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "autonomia")
-@JsonView(Vistas.Lista.class)
+@JsonView({ Vistas.Lista.class, Vistas.ListaExtendida.class, Vistas.Centro.class })
 public class Autonomia {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
