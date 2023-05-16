@@ -1,6 +1,6 @@
 package com.mifse.backend.persistencia.modelos;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.mifse.backend.vistas.Vistas;
 
 import lombok.Data;
 
@@ -24,24 +24,28 @@ public class Comentario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
+	@JsonView({Vistas.Centro.class, Vistas.Comentario.class})
 	private Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_residente")
+	@JsonView({Vistas.Centro.class, Vistas.Comentario.class})
 	private Residente residente;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_centro")
-	@JsonIgnore
 	private Centro centro;
 
-	@Column(name = "Contenido", nullable = false)
+	@Column(name = "Contenido")
+	@JsonView({Vistas.Centro.class, Vistas.Comentario.class})
 	private String contenido;
 
-	@Column(name = "Valoracion", nullable = false)
+	@Column(name = "Valoracion")
+	@JsonView({Vistas.Centro.class, Vistas.Comentario.class})
 	private Double valoracion;
 
-	@Column(name = "Fecha", nullable = false)
-	private LocalDateTime fecha;
+	@Column(name = "Fecha")
+	@JsonView({Vistas.Centro.class, Vistas.Comentario.class})
+	private Date fecha;
 
 }
