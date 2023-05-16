@@ -8,7 +8,8 @@ import com.mifse.backend.persistencia.modelos.Mensaje;
 
 public interface RepositorioMensaje extends JpaRepository<Mensaje, Integer> {
 
-	public List<Mensaje> findAllByEmisorIdAndReceptorId(Integer idEmisor, Integer idReceptor);
+	public List<Mensaje> findAllByEmisorIdAndReceptorIdOrEmisorIdAndReceptorId(Integer idEmisor, Integer idReceptor,
+			Integer idReceptor2, Integer idEmisor2);
 
 	public List<Mensaje> findAllByEmisorId(Integer idEmisor);
 

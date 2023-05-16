@@ -22,7 +22,8 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 
 	@Override
 	public List<Mensaje> obtenerTodosPorIdEmisorYIdReceptor(Integer idEmisor, Integer idReceptor) {
-		return this.repositorioMensaje.findAllByEmisorIdAndReceptorId(idEmisor, idReceptor);
+		return this.repositorioMensaje.findAllByEmisorIdAndReceptorIdOrEmisorIdAndReceptorId(idEmisor, idReceptor,
+				idReceptor, idEmisor);
 	}
 
 	@Override
@@ -43,8 +44,30 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 	}
 
 	@Override
+	public Set<Usuario> obtenerUsuariosConMensajesIntercambiadosSinLeer(Integer idUsuario) {
+		List<Mensaje> mensajesRecibidos = this.repositorioMensaje.findAllByReceptorId(idUsuario);
+		Set<Usuario> usuariosConMensajesNoLeidos = new HashSet<>();
+
+		for (Mensaje mensaje : mensajesRecibidos) {
+			Usuario emisor = mensaje.getEmisor();
+			if (emisor != null && !mensaje.getLeido()) {
+				usuariosConMensajesNoLeidos.add(emisor);
+			}
+		}
+
+		return usuariosConMensajesNoLeidos;
+	}
+
+	@Override
 	public Mensaje guardar(Mensaje mensaje) {
+		mensaje.setLeido(false);
 		return this.repositorioMensaje.save(mensaje);
+	}
+
+	@Override
+	public void marcarComoLeidos(List<Mensaje> mensajes) {
+		mensajes.forEach(m -> m.setLeido(true));
+		this.repositorioMensaje.saveAll(mensajes);
 	}
 
 }

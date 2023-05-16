@@ -12,5 +12,9 @@ public interface ServicioMensaje {
 
 	public Set<Usuario> obtenerUsuariosConMensajesIntercambiados(Integer idUsuario);
 
+	public Set<Usuario> obtenerUsuariosConMensajesIntercambiadosSinLeer(Integer idUsuario);
+
 	public Mensaje guardar(Mensaje mensaje);
+
+	public void marcarComoLeidos(List<Mensaje> mensajes);
 }

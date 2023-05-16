@@ -11,13 +11,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.mifse.backend.vistas.Vistas;
 
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "mensaje")
+@JsonView(Vistas.Conversacion.class)
 public class Mensaje {
 
 	@Id
@@ -27,12 +29,10 @@ public class Mensaje {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_usuario_emisor", nullable = false)
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Usuario emisor;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_usuario_receptor", nullable = false)
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Usuario receptor;
 
 	@Column(name = "Contenido", nullable = false, columnDefinition = "TEXT")
@@ -41,4 +41,6 @@ public class Mensaje {
 	@Column(name = "Fecha_envio", nullable = false)
 	private LocalDateTime fechaEnvio;
 
+	@Column(name = "Leido")
+	private Boolean leido;
 }
