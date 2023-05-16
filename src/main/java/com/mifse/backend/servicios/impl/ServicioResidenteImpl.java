@@ -1,58 +1,50 @@
 package com.mifse.backend.servicios.impl;
 
-import java.sql.SQLIntegrityConstraintViolationException;
-
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mifse.backend.persistencia.modelos.Residente;
 import com.mifse.backend.persistencia.repositorios.RepositorioResidente;
+import com.mifse.backend.servicios.ServicioEmail;
 import com.mifse.backend.servicios.ServicioResidente;
 
 @Service
 @Transactional
 public class ServicioResidenteImpl implements ServicioResidente {
 
-	private final String URL_VERIFICACION = "http://localhost:8090/usuarios/verificar-correo-electronico?id=";
-
 	@Autowired
 	private RepositorioResidente repositorioResidente;
 
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private ServicioEmail servicioEmail;
 
 	@Autowired
-	private JavaMailSender mailSender;
+	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public Residente guardar(Residente residente) throws Exception {
-		try {
-			residente.setContrasena(this.passwordEncoder.encode(residente.getContrasena()));
-			Residente residenteGuardado = this.repositorioResidente.save(residente);
+	public Residente guardar(Residente residente) {
+		residente.setContrasena(this.passwordEncoder.encode(residente.getContrasena()));
+		Residente residenteGuardado = this.repositorioResidente.save(residente);
 
-			this.enviarEmailVerificacion(residenteGuardado);
+		this.servicioEmail.enviarEmailVerificacion(residenteGuardado.getNombre(), residenteGuardado.getEmail(),
+				residenteGuardado.getId());
 
-			return residenteGuardado;
-		} catch (ConstraintViolationException e) {
-			throw new Exception("Ya existe un residente con ese email");
-		}
+		return residenteGuardado;
 	}
 
-	private void enviarEmailVerificacion(Residente residente) {
-		String asunto = residente.getNombre() + ", verifica tu correo electrónico";
-		String mensaje = "¡Bienvenid@ " + residente.getNombre()
-				+ "!\n\nPor favor, haz clic en el siguiente enlace para verificar tu correo electrónico: "
-				+ URL_VERIFICACION + residente.getId();
-		SimpleMailMessage correo = new SimpleMailMessage();
-		correo.setTo(residente.getEmail());
-		correo.setSubject(asunto);
-		correo.setText(mensaje);
-		this.mailSender.send(correo);
+	@Override
+	public Residente actualizar(Residente residente) {
+		Residente residenteAActualizar = this.repositorioResidente.findById(residente.getId()).get();
+
+		residenteAActualizar.setNombre(residente.getNombre());
+		residenteAActualizar.setApellido1(residente.getApellido1());
+		residenteAActualizar.setApellido2(residente.getApellido2());
+		residenteAActualizar.setEmail(residente.getEmail());
+		residenteAActualizar.setTipoResidente(residente.getTipoResidente());
+
+		return residenteAActualizar;
 	}
+
 }
