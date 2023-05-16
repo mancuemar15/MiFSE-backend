@@ -21,16 +21,18 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "centro")
+@JsonView(Vistas.Centro.class)
 public class Centro {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	@JsonView({Vistas.ListaPreferencias.class, Vistas.Lista.class})
+	@JsonView({ Vistas.ListaPreferencias.class, Vistas.Lista.class, Vistas.ListaExtendida.class,
+			Vistas.Comentario.class, Vistas.Centro.class })
 	private Integer id;
 
 	@Column(name = "Nombre", nullable = false)
-	@JsonView({Vistas.ListaPreferencias.class, Vistas.Lista.class})
+	@JsonView({ Vistas.ListaPreferencias.class, Vistas.Lista.class, Vistas.ListaExtendida.class, Vistas.Centro.class })
 	private String nombre;
 
 	@Column(name = "Direccion", nullable = false)
@@ -38,18 +40,15 @@ public class Centro {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_localidad", nullable = false)
-	@JsonView(Vistas.Lista.class)
+	@JsonView({ Vistas.Lista.class, Vistas.ListaExtendida.class, Vistas.Centro.class })
 	private Localidad localidad;
 
 	@Column(name = "URL_imagen")
 	private Integer urlImagen;
 
 	@Column(name = "Valoracion_media")
-	@JsonView(Vistas.Lista.class)
+	@JsonView({ Vistas.Lista.class, Vistas.ListaExtendida.class, Vistas.Centro.class })
 	private Double valoracionMedia;
-
-	@Column(name = "Descripcion", nullable = false)
-	private String descripcion;
 
 	@Column(name = "Longitud", nullable = false)
 	private Double longitud;
@@ -59,4 +58,5 @@ public class Centro {
 
 	@OneToMany(mappedBy = "centro")
 	private List<Comentario> comentarios;
+
 }

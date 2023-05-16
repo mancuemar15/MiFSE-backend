@@ -10,4 +10,6 @@ public interface ServicioCentro {
 	public Centro obtenerPorId(Integer id);
 
 	public List<CentroIdNombreDTO> obtenerPorNombre(String nombre);
+	
+	public void actualizarValoracionMedia(Integer idCentro);
 }

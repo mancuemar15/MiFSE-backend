@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.mifse.backend.persistencia.modelos.Centro;
 import com.mifse.backend.persistencia.modelos.dto.CentroIdNombreDTO;
 import com.mifse.backend.servicios.ServicioCentro;
+import com.mifse.backend.vistas.Vistas;
 
 @RestController
 @RequestMapping("/centros")
@@ -21,6 +23,7 @@ public class ControladorCentro {
 	@Autowired
 	private ServicioCentro servicioCentro;
 
+	@JsonView(Vistas.Centro.class)
 	@GetMapping("/{id}")
 	public ResponseEntity<?> obtenerCentroPorId(@PathVariable Integer id) {
 		Centro centro = this.servicioCentro.obtenerPorId(id);
