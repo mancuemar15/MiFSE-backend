@@ -24,7 +24,7 @@ public class Localidad {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private Integer id;
+	private Long id;
 
 	@Column(name = "Codigo_postal")
 	private Integer codigoPostal;

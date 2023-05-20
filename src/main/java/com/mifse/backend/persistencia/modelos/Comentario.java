@@ -25,7 +25,7 @@ public class Comentario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	@JsonView({Vistas.Centro.class, Vistas.Comentario.class})
-	private Integer id;
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_residente")

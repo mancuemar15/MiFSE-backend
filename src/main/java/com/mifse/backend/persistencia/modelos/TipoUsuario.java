@@ -13,9 +13,10 @@ import lombok.Data;
 @Entity
 @Table(name = "tipo_usuario")
 public class TipoUsuario {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "Tipo")
 	private String tipo;

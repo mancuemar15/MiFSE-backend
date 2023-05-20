@@ -24,7 +24,7 @@ public class Provincia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private Integer id;
+	private Long id;
 
 	@Column(name = "Nombre")
 	@JsonView(Vistas.Centro.class)

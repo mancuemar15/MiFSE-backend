@@ -25,7 +25,7 @@ public class ControladorCentro {
 
 	@JsonView(Vistas.Centro.class)
 	@GetMapping("/{id}")
-	public ResponseEntity<?> obtenerCentroPorId(@PathVariable Integer id) {
+	public ResponseEntity<?> obtenerCentroPorId(@PathVariable Long id) {
 		Centro centro = this.servicioCentro.obtenerPorId(id);
 		if (Objects.isNull(centro)) {
 			return ResponseEntity.notFound().build();

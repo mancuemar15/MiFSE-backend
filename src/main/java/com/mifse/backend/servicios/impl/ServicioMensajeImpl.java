@@ -21,13 +21,13 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 	private RepositorioMensaje repositorioMensaje;
 
 	@Override
-	public List<Mensaje> obtenerTodosPorIdEmisorYIdReceptor(Integer idEmisor, Integer idReceptor) {
+	public List<Mensaje> obtenerTodosPorIdEmisorYIdReceptor(Long idEmisor, Long idReceptor) {
 		return this.repositorioMensaje.findAllByEmisorIdAndReceptorIdOrEmisorIdAndReceptorId(idEmisor, idReceptor,
 				idReceptor, idEmisor);
 	}
 
 	@Override
-	public Set<Usuario> obtenerUsuariosConMensajesIntercambiados(Integer idUsuario) {
+	public Set<Usuario> obtenerUsuariosConMensajesIntercambiados(Long idUsuario) {
 		List<Mensaje> mensajesEnviados = this.repositorioMensaje.findAllByEmisorId(idUsuario);
 		List<Mensaje> mensajesRecibidos = this.repositorioMensaje.findAllByReceptorId(idUsuario);
 		Set<Usuario> usuariosConMensajesIntercambiados = new HashSet<>();
@@ -44,7 +44,7 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 	}
 
 	@Override
-	public Set<Usuario> obtenerUsuariosConMensajesIntercambiadosSinLeer(Integer idUsuario) {
+	public Set<Usuario> obtenerUsuariosConMensajesIntercambiadosSinLeer(Long idUsuario) {
 		List<Mensaje> mensajesRecibidos = this.repositorioMensaje.findAllByReceptorId(idUsuario);
 		Set<Usuario> usuariosConMensajesNoLeidos = new HashSet<>();
 

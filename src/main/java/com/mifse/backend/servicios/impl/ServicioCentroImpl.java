@@ -20,7 +20,7 @@ public class ServicioCentroImpl implements ServicioCentro {
 	private RepositorioCentro repositorioCentro;
 
 	@Override
-	public Centro obtenerPorId(Integer id) {
+	public Centro obtenerPorId(Long id) {
 		return this.repositorioCentro.findById(id).get();
 	}
 
@@ -30,7 +30,7 @@ public class ServicioCentroImpl implements ServicioCentro {
 	}
 
 	@Override
-	public void actualizarValoracionMedia(Integer centroId) {
+	public void actualizarValoracionMedia(Long centroId) {
 		Centro centro = obtenerPorId(centroId);
 		if (centro != null) {
 			Double valoracionMedia = calcularValoracionMedia(centro);

@@ -22,7 +22,7 @@ public class UltimaPosicion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private Integer id;
+	private Long id;
 
 	@Column(name = "Numero")
 	private Integer numero;

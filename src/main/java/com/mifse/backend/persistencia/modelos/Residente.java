@@ -21,10 +21,15 @@ import lombok.EqualsAndHashCode;
 @PrimaryKeyJoinColumn(name = "ID")
 public class Residente extends Usuario {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6610378539267640777L;
+
 	@Id
 	@JsonView({ Vistas.ListaPreferencias.class, Vistas.ListaExtendida.class, Vistas.Conversacion.class,
 			Vistas.Centro.class, Vistas.Comentario.class })
-	private Integer id;
+	private Long id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_tipo_residente")

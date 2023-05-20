@@ -11,7 +11,7 @@ import com.mifse.backend.persistencia.modelos.dto.FormularioContacto;
 import com.mifse.backend.servicios.ServicioEmail;
 
 @RestController
-@RequestMapping(path = "/contacto")
+@RequestMapping("/contacto")
 public class ControladorContacto {
 
 	@Autowired

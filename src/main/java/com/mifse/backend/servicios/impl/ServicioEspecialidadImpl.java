@@ -18,17 +18,12 @@ public class ServicioEspecialidadImpl implements ServicioEspecialidad {
 	private RepositorioEspecialidad repositorioEspecialidad;
 
 	@Override
-	public List<Especialidad> obtenerTodas() {
-		return this.repositorioEspecialidad.findAll();
-	}
-
-	@Override
-	public List<Especialidad> obtenerTodasPorIdCentro(Integer idCentro) {
+	public List<Especialidad> obtenerTodasPorIdCentro(Long idCentro) {
 		return this.repositorioEspecialidad.findAllByIdCentro(idCentro);
 	}
 
 	@Override
-	public Especialidad obtenerPorId(Integer id) {
+	public Especialidad obtenerPorId(Long id) {
 		return this.repositorioEspecialidad.findById(id).orElse(null);
 	}
 

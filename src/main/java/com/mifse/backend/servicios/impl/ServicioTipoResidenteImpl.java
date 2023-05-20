@@ -18,11 +18,6 @@ public class ServicioTipoResidenteImpl implements ServicioTipoResidente {
 	private RepositorioTipoResidente repositorioTipoResidente;
 
 	@Override
-	public TipoResidente obtenerPorId(Integer id) {
-		return this.repositorioTipoResidente.findById(id).get();
-	}
-
-	@Override
 	public List<TipoResidente> obtenerTodos() {
 		return this.repositorioTipoResidente.findAll();
 	}

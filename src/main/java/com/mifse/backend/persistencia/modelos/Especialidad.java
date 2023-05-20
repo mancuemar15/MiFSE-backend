@@ -23,7 +23,7 @@ public class Especialidad {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonView({ Vistas.ListaPreferencias.class, Vistas.Lista.class, Vistas.ListaExtendida.class })
-	private Integer id;
+	private Long id;
 
 	@Column(name = "Nombre")
 	@JsonView({ Vistas.ListaPreferencias.class, Vistas.Lista.class, Vistas.ListaExtendida.class })

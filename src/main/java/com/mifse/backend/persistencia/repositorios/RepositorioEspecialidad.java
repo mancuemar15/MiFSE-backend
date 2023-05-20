@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 import com.mifse.backend.persistencia.modelos.Especialidad;
 
-public interface RepositorioEspecialidad extends JpaRepository<Especialidad, Integer> {
+public interface RepositorioEspecialidad extends JpaRepository<Especialidad, Long> {
 
 	@Query("SELECT e, t FROM EspecialidadCentro ec JOIN ec.especialidad e JOIN e.titulacion t JOIN ec.centro c WHERE c.id = :idCentro")
-	public List<Especialidad> findAllByIdCentro(@Param("idCentro") Integer idCentro);
+	public List<Especialidad> findAllByIdCentro(@Param("idCentro") Long idCentro);
 }

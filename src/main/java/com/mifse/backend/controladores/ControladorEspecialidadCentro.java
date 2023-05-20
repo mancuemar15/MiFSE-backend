@@ -21,15 +21,6 @@ public class ControladorEspecialidadCentro {
 	@Autowired
 	private ServicioEspecialidadCentro servicioEspecialidadCentro;
 
-	@GetMapping
-	public ResponseEntity<?> obtenerTodasEspecialidadesCentros() {
-		List<EspecialidadCentro> especialidadesCentros = this.servicioEspecialidadCentro.obtenerTodas();
-		if (especialidadesCentros.isEmpty()) {
-			return ResponseEntity.noContent().build();
-		}
-		return ResponseEntity.ok(especialidadesCentros);
-	}
-
 	@JsonView(Vistas.Lista.class)
 	@GetMapping("/{nombreTitulacion}")
 	public ResponseEntity<?> obtenerTodasEspecialidadesCentrosPorNombreTitulacion(
@@ -42,14 +33,4 @@ public class ControladorEspecialidadCentro {
 		return ResponseEntity.ok(especialidadesCentros);
 	}
 
-//	@JsonView(Vistas.Lista.class)
-//	@GetMapping("/lista/{idLista}")
-//	public ResponseEntity<?> obtenerTodasEspecialidadesCentrosPorIdLista(@PathVariable Integer idLista) {
-//		List<EspecialidadCentro> especialidadesCentros = this.servicioEspecialidadCentro
-//				.obtenerTodasPorIdLista(idLista);
-//		if (especialidadesCentros.isEmpty()) {
-//			return ResponseEntity.notFound().build();
-//		}
-//		return ResponseEntity.ok(especialidadesCentros);
-//	}
 }

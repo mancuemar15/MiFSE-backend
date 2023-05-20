@@ -29,7 +29,7 @@ public class Centro {
 	@Column(name = "ID")
 	@JsonView({ Vistas.ListaPreferencias.class, Vistas.Lista.class, Vistas.ListaExtendida.class,
 			Vistas.Comentario.class, Vistas.Centro.class })
-	private Integer id;
+	private Long id;
 
 	@Column(name = "Nombre", nullable = false)
 	@JsonView({ Vistas.ListaPreferencias.class, Vistas.Lista.class, Vistas.ListaExtendida.class, Vistas.Centro.class })

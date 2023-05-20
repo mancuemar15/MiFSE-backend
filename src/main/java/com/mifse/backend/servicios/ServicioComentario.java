@@ -6,6 +6,6 @@ public interface ServicioComentario {
 	
 	public Comentario guardar(Comentario comentario);
 
-	public void eliminarPorId(Integer id);
+	public void eliminarPorId(Long id);
 
 }

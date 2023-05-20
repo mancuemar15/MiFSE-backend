@@ -19,13 +19,8 @@ public class ControladorEspecialidad {
 	@Autowired
 	private ServicioEspecialidad servicioEspecialidad;
 
-	@GetMapping
-	public ResponseEntity<?> obtenerEspecialidades() {
-		return ResponseEntity.ok(this.servicioEspecialidad.obtenerTodas());
-	}
-
 	@GetMapping("/centro/{idCentro}")
-	public ResponseEntity<?> obtenerEspecialidadesPorIdCentro(@PathVariable Integer idCentro) {
+	public ResponseEntity<?> obtenerEspecialidadesPorIdCentro(@PathVariable Long idCentro) {
 		List<Especialidad> especialidades = this.servicioEspecialidad.obtenerTodasPorIdCentro(idCentro);
 
 		if (especialidades.isEmpty()) {
@@ -35,14 +30,4 @@ public class ControladorEspecialidad {
 		}
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<?> obtenerEspecialidadPorId(@PathVariable Integer id) {
-		Especialidad especialidad = this.servicioEspecialidad.obtenerPorId(id);
-
-		if (especialidad == null) {
-			return ResponseEntity.notFound().build();
-		} else {
-			return ResponseEntity.ok(especialidad);
-		}
-	}
 }

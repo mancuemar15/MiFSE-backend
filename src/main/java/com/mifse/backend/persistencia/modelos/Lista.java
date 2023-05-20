@@ -35,7 +35,7 @@ public class Lista {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	@JsonView({Vistas.ListaPreferencias.class, Vistas.ListaExtendida.class})
-	private Integer id;
+	private Long id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_residente", nullable = false)

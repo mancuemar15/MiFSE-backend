@@ -19,4 +19,13 @@ public class Vistas {
 
 	public class Comentario {
 	}
+
+	public class Usuario {
+	}
+
+	public class Residente extends Usuario {
+	}
+
+	public class Administrador extends Usuario {
+	}
 }

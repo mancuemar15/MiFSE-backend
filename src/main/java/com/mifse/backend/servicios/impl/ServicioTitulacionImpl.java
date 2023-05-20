@@ -22,9 +22,4 @@ public class ServicioTitulacionImpl implements ServicioTitulacion {
 		return this.repositorioTitulacion.findAll();
 	}
 
-	@Override
-	public Titulacion obtenerPorId(Integer id) {
-		return this.repositorioTitulacion.findById(id).get();
-	}
-
 }

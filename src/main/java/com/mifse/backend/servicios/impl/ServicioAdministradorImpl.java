@@ -9,6 +9,7 @@ import com.mifse.backend.persistencia.modelos.Administrador;
 import com.mifse.backend.persistencia.repositorios.RepositorioAdministrador;
 import com.mifse.backend.servicios.ServicioAdministrador;
 import com.mifse.backend.servicios.ServicioEmail;
+import com.mifse.backend.servicios.ServicioTipoUsuario;
 
 @Service
 @Transactional
@@ -16,6 +17,9 @@ public class ServicioAdministradorImpl implements ServicioAdministrador {
 
 	@Autowired
 	private RepositorioAdministrador respositorioAdministrador;
+
+	@Autowired
+	private ServicioTipoUsuario servicioTipoUsuario;
 
 	@Autowired
 	private ServicioEmail servicioEmail;
@@ -26,6 +30,8 @@ public class ServicioAdministradorImpl implements ServicioAdministrador {
 	@Override
 	public Administrador guardar(Administrador administrador) {
 		administrador.setContrasena(this.passwordEncoder.encode(administrador.getContrasena()));
+		administrador.setTipoUsuario(this.servicioTipoUsuario.obtenerPorTipo("ADMINISTRADOR"));
+		administrador.setHabilitado(true);
 		this.servicioEmail.enviarEmailVerificacion(administrador.getNombre(), administrador.getEmail(),
 				administrador.getId());
 		return this.respositorioAdministrador.save(administrador);
@@ -38,7 +44,6 @@ public class ServicioAdministradorImpl implements ServicioAdministrador {
 		administradorAActualizar.setNombre(administrador.getNombre());
 		administradorAActualizar.setApellido1(administrador.getApellido1());
 		administradorAActualizar.setApellido2(administrador.getApellido2());
-		administradorAActualizar.setEmail(administrador.getEmail());
 
 		return this.respositorioAdministrador.save(administradorAActualizar);
 	}

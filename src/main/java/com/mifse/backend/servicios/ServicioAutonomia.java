@@ -8,6 +8,4 @@ public interface ServicioAutonomia {
 
 	List<Autonomia> obtenerTodas();
 
-	Autonomia obtenerPorId(Integer id);
-
 }

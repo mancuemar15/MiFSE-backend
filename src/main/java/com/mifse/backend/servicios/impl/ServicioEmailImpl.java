@@ -16,7 +16,7 @@ public class ServicioEmailImpl implements ServicioEmail {
 	private JavaMailSender mailSender;
 
 	@Override
-	public void enviarEmailVerificacion(String nombreDestinatario, String emailDestinatario, Integer idUsuario) {
+	public void enviarEmailVerificacion(String nombreDestinatario, String emailDestinatario, Long idUsuario) {
 		String asunto = nombreDestinatario + ", verifica tu correo electrónico";
 		String cuerpo = "¡Bienvenid@ " + nombreDestinatario
 				+ "!\n\nPor favor, haz clic en el siguiente enlace para verificar tu correo electrónico: "

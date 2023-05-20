@@ -7,9 +7,9 @@ import com.mifse.backend.persistencia.modelos.dto.CentroIdNombreDTO;
 
 public interface ServicioCentro {
 
-	public Centro obtenerPorId(Integer id);
+	public Centro obtenerPorId(Long id);
 
 	public List<CentroIdNombreDTO> obtenerPorNombre(String nombre);
 	
-	public void actualizarValoracionMedia(Integer idCentro);
+	public void actualizarValoracionMedia(Long idCentro);
 }

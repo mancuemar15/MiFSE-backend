@@ -20,7 +20,7 @@ public class Titulacion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonView(Vistas.Conversacion.class)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "Nombre")
 	@JsonView({ Vistas.ListaPreferencias.class, Vistas.Conversacion.class, Vistas.Centro.class, Vistas.Comentario.class })

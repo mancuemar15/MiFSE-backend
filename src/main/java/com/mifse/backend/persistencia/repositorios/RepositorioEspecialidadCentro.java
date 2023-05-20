@@ -14,5 +14,5 @@ public interface RepositorioEspecialidadCentro extends JpaRepository<Especialida
 	public List<EspecialidadCentro> findAllByEspecialidadTitulacionNombre(String nombreTitulacion);
 	
 	@Query("SELECT ec FROM EspecialidadCentro ec JOIN ec.preferencias p JOIN p.lista l WHERE l.id = :idLista ORDER BY p.numero")
-	public List<EspecialidadCentro> findAllByIdLista(@Param("idLista") Integer idLista);
+	public List<EspecialidadCentro> findAllByIdLista(@Param("idLista") Long idLista);
 }

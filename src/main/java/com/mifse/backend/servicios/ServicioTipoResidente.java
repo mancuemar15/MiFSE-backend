@@ -8,5 +8,4 @@ public interface ServicioTipoResidente {
 
 	public List<TipoResidente> obtenerTodos();
 
-	public TipoResidente obtenerPorId(Integer id);
 }

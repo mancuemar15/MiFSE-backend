@@ -9,6 +9,7 @@ import com.mifse.backend.persistencia.modelos.Residente;
 import com.mifse.backend.persistencia.repositorios.RepositorioResidente;
 import com.mifse.backend.servicios.ServicioEmail;
 import com.mifse.backend.servicios.ServicioResidente;
+import com.mifse.backend.servicios.ServicioTipoUsuario;
 
 @Service
 @Transactional
@@ -18,14 +19,24 @@ public class ServicioResidenteImpl implements ServicioResidente {
 	private RepositorioResidente repositorioResidente;
 
 	@Autowired
+	private ServicioTipoUsuario servicioTipoUsuario;
+
+	@Autowired
 	private ServicioEmail servicioEmail;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Override
+	public Residente obtenerPorId(Long id) {
+		return this.repositorioResidente.findById(id).get();
+	}
+
+	@Override
 	public Residente guardar(Residente residente) {
 		residente.setContrasena(this.passwordEncoder.encode(residente.getContrasena()));
+		residente.setTipoUsuario(this.servicioTipoUsuario.obtenerPorTipo("RESIDENTE"));
+		residente.setHabilitado(true);
 		Residente residenteGuardado = this.repositorioResidente.save(residente);
 
 		this.servicioEmail.enviarEmailVerificacion(residenteGuardado.getNombre(), residenteGuardado.getEmail(),

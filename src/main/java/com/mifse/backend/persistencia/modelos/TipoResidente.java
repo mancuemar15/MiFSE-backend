@@ -19,7 +19,7 @@ import lombok.Data;
 public class TipoResidente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "Tipo")
 	private String tipo;

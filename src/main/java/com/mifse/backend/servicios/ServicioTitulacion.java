@@ -8,5 +8,4 @@ public interface ServicioTitulacion {
 
 	public List<Titulacion> obtenerTodas();
 
-	public Titulacion obtenerPorId(Integer id);
 }

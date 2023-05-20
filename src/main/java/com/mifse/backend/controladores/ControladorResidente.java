@@ -2,6 +2,7 @@ package com.mifse.backend.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,12 +20,14 @@ public class ControladorResidente {
 	private ServicioResidente servicioResidente;
 
 	@PostMapping("/registro")
-	public ResponseEntity<?> guardarResidente(@RequestBody Residente residente) {
-		return ResponseEntity.ok(this.servicioResidente.guardar(residente));
+	public ResponseEntity<?> crearResidente(@RequestBody Residente residente) {
+		Residente residenteGuardado = servicioResidente.guardar(residente);
+		return ResponseEntity.ok().body(residenteGuardado);
 	}
-	
+
+	@PreAuthorize("authentication.principal.id == #residente.id")
 	@PutMapping
 	public ResponseEntity<?> actualizarResidente(@RequestBody Residente residente) {
 		return ResponseEntity.ok(this.servicioResidente.actualizar(residente));
-	} 
+	}
 }

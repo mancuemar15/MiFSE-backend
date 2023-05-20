@@ -35,11 +35,11 @@ public class ServicioComentarioImpl implements ServicioComentario {
 	}
 
 	@Override
-	public void eliminarPorId(Integer id) {
+	public void eliminarPorId(Long id) {
 		Comentario comentario = this.repositorioComentario.findById(id).orElse(null);
 
 		if (comentario != null) {
-			Integer idCentro = comentario.getCentro().getId();
+			Long idCentro = comentario.getCentro().getId();
 			this.repositorioComentario.deleteById(id);
 			this.repositorioComentario.flush();
 

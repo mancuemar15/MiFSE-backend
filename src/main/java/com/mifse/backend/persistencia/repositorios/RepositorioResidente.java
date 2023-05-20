@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.mifse.backend.persistencia.modelos.Residente;
 
-public interface RepositorioResidente extends JpaRepository<Residente, Integer> {
+public interface RepositorioResidente extends JpaRepository<Residente, Long> {
 
 }

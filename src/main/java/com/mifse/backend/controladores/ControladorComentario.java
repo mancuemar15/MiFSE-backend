@@ -3,6 +3,7 @@ package com.mifse.backend.controladores;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ public class ControladorComentario {
 	@Autowired
 	private ServicioComentario servicioComentario;
 
+	@PreAuthorize("authentication.principal.id == #comentario.residente.id")
 	@JsonView(Vistas.Comentario.class)
 	@PostMapping
 	public ResponseEntity<?> guardar(@RequestBody Comentario comentario) {
@@ -30,7 +32,7 @@ public class ControladorComentario {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> borrar(@PathVariable Integer id) {
+	public ResponseEntity<?> borrar(@PathVariable Long id) {
 		this.servicioComentario.eliminarPorId(id);
 		return ResponseEntity.noContent().build();
 	}

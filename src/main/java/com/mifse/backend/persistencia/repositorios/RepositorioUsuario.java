@@ -1,12 +1,14 @@
 package com.mifse.backend.persistencia.repositorios;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.mifse.backend.persistencia.modelos.Usuario;
 
-public interface RepositorioUsuario extends JpaRepository<Usuario, Integer> {
+public interface RepositorioUsuario extends JpaRepository<Usuario, Long> {
 
-	public Usuario findByEmail(String email);
+	Optional<Usuario> findByEmail(String email);
 
 	public Usuario findByEmailAndContrasena(String email, String contrasena);
 

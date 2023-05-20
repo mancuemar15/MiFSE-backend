@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.mifse.backend.persistencia.modelos.UltimaPosicion;
 
-public interface RepositorioUltimaPosicion extends JpaRepository<UltimaPosicion, Integer> {
+public interface RepositorioUltimaPosicion extends JpaRepository<UltimaPosicion, Long> {
 
 	public List<UltimaPosicion> findAllByEspecialidadTitulacionNombre(String nombreTitulacion);
 }

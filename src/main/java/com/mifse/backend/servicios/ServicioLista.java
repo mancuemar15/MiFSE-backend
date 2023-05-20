@@ -6,13 +6,13 @@ import com.mifse.backend.persistencia.modelos.Lista;
 
 public interface ServicioLista {
 	
-	public Lista obtenerPorIdOrdenadoPorNumeroPreferencia(Integer id);
+	public Lista obtenerPorIdOrdenadoPorNumeroPreferencia(Long id);
 
-    public List<Lista> obtenerListasPorIdResidente(Integer idResidente);
+    public List<Lista> obtenerListasPorIdResidente(Long idResidente);
     
     public Lista guardar(Lista lista);
     
     public Lista actualizar(Lista lista);
     
-    void eliminarPorId(Integer id);
+    void eliminarPorId(Long id);
 }

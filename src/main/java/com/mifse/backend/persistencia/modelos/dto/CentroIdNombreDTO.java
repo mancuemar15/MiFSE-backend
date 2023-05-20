@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class CentroIdNombreDTO {
 
-	private Integer id;
+	private Long id;
 	
 	private String nombre;
 }

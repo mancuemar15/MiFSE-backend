@@ -22,8 +22,4 @@ public class ServicioAutonomiaImpl implements ServicioAutonomia {
 		return this.repositorioAutonomia.findAll();
 	}
 
-	@Override
-	public Autonomia obtenerPorId(Integer id) {
-		return this.repositorioAutonomia.findById(id).get();
-	}
 }

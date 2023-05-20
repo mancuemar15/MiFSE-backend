@@ -6,9 +6,7 @@ import com.mifse.backend.persistencia.modelos.Especialidad;
 
 public interface ServicioEspecialidad {
 
-	public List<Especialidad> obtenerTodas();
-	
-	public List<Especialidad> obtenerTodasPorIdCentro(Integer idCentro);
+	public List<Especialidad> obtenerTodasPorIdCentro(Long idCentro);
 
-	public Especialidad obtenerPorId(Integer id);
+	public Especialidad obtenerPorId(Long id);
 }

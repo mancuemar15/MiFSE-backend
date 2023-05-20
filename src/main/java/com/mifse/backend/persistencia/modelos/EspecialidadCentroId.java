@@ -12,9 +12,9 @@ import lombok.Data;
 public class EspecialidadCentroId implements Serializable {
 
 	private static final long serialVersionUID = -8565513644282660450L;
-	
-	private Integer especialidad;
-	
-	private Integer centro;
+
+	private Long especialidad;
+
+	private Long centro;
 
 }

@@ -13,7 +13,7 @@ public class PreferenciaId implements Serializable {
 
 	private static final long serialVersionUID = -8802597742036545209L;
 
-	private Integer lista;
+	private Long lista;
 	
 	private EspecialidadCentroId especialidadCentro;
 
