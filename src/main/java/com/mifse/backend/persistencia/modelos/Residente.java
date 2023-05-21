@@ -28,7 +28,7 @@ public class Residente extends Usuario {
 
 	@Id
 	@JsonView({ Vistas.ListaPreferencias.class, Vistas.ListaExtendida.class, Vistas.Conversacion.class,
-			Vistas.Centro.class, Vistas.Comentario.class })
+			Vistas.Centro.class, Vistas.Comentario.class, Vistas.Usuario.class })
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.EAGER)

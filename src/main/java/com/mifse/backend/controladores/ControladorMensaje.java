@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.mifse.backend.excepciones.ActualizacionMensajeException;
+import com.mifse.backend.excepciones.MensajeNotFoundException;
 import com.mifse.backend.persistencia.modelos.Mensaje;
 import com.mifse.backend.persistencia.modelos.Usuario;
 import com.mifse.backend.servicios.ServicioMensaje;
@@ -32,43 +35,46 @@ public class ControladorMensaje {
 	@PreAuthorize("authentication.principal.id == #idUsuario1 or authentication.principal.id == #idUsuario2")
 	@JsonView(Vistas.Conversacion.class)
 	@GetMapping("/usuarios/{idUsuario1}/{idUsuario2}")
-	public ResponseEntity<?> obtenerMensajesPorUsuarioEmisorYUsuarioReceptor(@PathVariable Long idUsuario1,
+	public ResponseEntity<List<Mensaje>> obtenerMensajesPorUsuarioEmisorYUsuarioReceptor(@PathVariable Long idUsuario1,
 			@PathVariable Long idUsuario2) {
-		List<Mensaje> mensajes = this.servicioMensaje.obtenerTodosPorIdEmisorYIdReceptor(idUsuario1, idUsuario2);
-		if (mensajes.isEmpty()) {
-			return ResponseEntity.noContent().build();
-		} else {
-			return ResponseEntity.ok(mensajes);
+		try {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(this.servicioMensaje.obtenerTodosPorIdEmisorYIdReceptor(idUsuario1, idUsuario2));
+		} catch (MensajeNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
 	}
 
 	@PreAuthorize("authentication.principal.id == #idUsuario")
 	@GetMapping("/usuarios/{idUsuario}")
-	public ResponseEntity<?> obtenerUsuariosConMensajesIntercambiados(@PathVariable Long idUsuario) {
-		Set<Usuario> usuarios = this.servicioMensaje.obtenerUsuariosConMensajesIntercambiados(idUsuario);
-		if (usuarios.isEmpty()) {
-			return ResponseEntity.noContent().build();
-		} else {
-			return ResponseEntity.ok(usuarios);
+	public ResponseEntity<Set<Usuario>> obtenerUsuariosConMensajesIntercambiados(@PathVariable Long idUsuario) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(this.servicioMensaje.obtenerUsuariosConMensajesIntercambiados(idUsuario));
+		} catch (MensajeNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
 	}
 
 	@PreAuthorize("authentication.principal.id == #idUsuario")
 	@GetMapping("/usuarios/{idUsuario}/sin-leer")
-	public ResponseEntity<?> obtenerUsuariosConMensajesIntercambiadosSinLeer(@PathVariable Long idUsuario) {
-		Set<Usuario> usuarios = this.servicioMensaje.obtenerUsuariosConMensajesIntercambiadosSinLeer(idUsuario);
-		if (usuarios.isEmpty()) {
-			return ResponseEntity.noContent().build();
-		} else {
-			return ResponseEntity.ok(usuarios);
+	public ResponseEntity<Set<Usuario>> obtenerUsuariosConMensajesIntercambiadosSinLeer(@PathVariable Long idUsuario) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(this.servicioMensaje.obtenerUsuariosConMensajesIntercambiadosSinLeer(idUsuario));
+		} catch (MensajeNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
 	}
 
 	@PreAuthorize("authentication.principal.id == #mensaje.emisor.id and authentication.principal.verificado == true")
 	@PostMapping
-	public ResponseEntity<?> guardarMensaje(@RequestBody Mensaje mensaje) {
-		Mensaje mensajeGuardado = this.servicioMensaje.guardar(mensaje);
-		return ResponseEntity.status(HttpStatus.CREATED).body(mensajeGuardado);
+	public ResponseEntity<Mensaje> guardarMensaje(@RequestBody Mensaje mensaje) {
+		try {
+			return ResponseEntity.status(HttpStatus.CREATED).body(this.servicioMensaje.guardar(mensaje));
+		} catch (MensajeNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@PreFilter("filterObject.receptor.id == authentication.principal.id")
@@ -77,8 +83,8 @@ public class ControladorMensaje {
 		try {
 			this.servicioMensaje.marcarComoLeidos(mensajes);
 			return ResponseEntity.status(HttpStatus.OK).body("Mensajes actualizados");
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body("No se han podido actualizar");
+		} catch (ActualizacionMensajeException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_MODIFIED, "No se han podido actualizar los mensajes");
 		}
 	}
 

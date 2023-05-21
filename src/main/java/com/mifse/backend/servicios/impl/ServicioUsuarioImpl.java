@@ -1,18 +1,19 @@
 package com.mifse.backend.servicios.impl;
 
-import java.text.MessageFormat;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mifse.backend.excepciones.BloqueoUsuarioException;
+import com.mifse.backend.excepciones.DesbloqueoUsuarioException;
+import com.mifse.backend.excepciones.EliminacionUsuarioException;
+import com.mifse.backend.excepciones.UsuarioNotFoundException;
+import com.mifse.backend.excepciones.VerificacionUsuarioException;
 import com.mifse.backend.persistencia.modelos.Usuario;
 import com.mifse.backend.persistencia.repositorios.RepositorioUsuario;
 import com.mifse.backend.servicios.ServicioUsuario;
@@ -29,87 +30,80 @@ public class ServicioUsuarioImpl implements ServicioUsuario, UserDetailsManager 
 
 	@Override
 	public Usuario obtenerPorId(Long id) {
-		return this.repositorioUsuario.findById(id).get();
+		return this.repositorioUsuario.findById(id)
+				.orElseThrow(() -> new UsuarioNotFoundException("No encontrado usuario con ID: " + id));
 	}
 
 	@Override
 	public List<Usuario> obtenerTodos() {
-		return this.repositorioUsuario.findAll();
+		List<Usuario> usuarios = this.repositorioUsuario.findAll();
+		if (usuarios.isEmpty()) {
+			throw new UsuarioNotFoundException("No existen usuarios.");
+		}
+		return usuarios;
 	}
 
 	@Override
-	public Boolean verificarCorreoElectronico(Long id) {
-		Optional<Usuario> optionalUsuario = this.repositorioUsuario.findById(id);
-		if (optionalUsuario.isPresent()) {
-			Usuario usuario = optionalUsuario.get();
+	public void verificarUsuario(Long id) {
+		Usuario usuario = this.obtenerPorId(id);
+		try {
 			if (!usuario.isVerificado()) {
 				usuario.setVerificado(true);
-				this.actualizar(usuario);
-				return true;
+				this.repositorioUsuario.save(usuario);
 			}
+		} catch (Exception e) {
+			throw new VerificacionUsuarioException("No se ha podido verificar el usuario.");
 		}
-		return false;
 	}
 
 	@Override
-	public Optional<Usuario> obtenerPorEmail(String email) {
-		return this.repositorioUsuario.findByEmail(email);
+	public Usuario obtenerPorEmail(String email) {
+		return this.repositorioUsuario.findByEmail(email)
+				.orElseThrow(() -> new UsuarioNotFoundException("No encontrado usuario con email " + email));
 	}
 
 	@Override
-	public Usuario obtenerPorEmailYContrasena(String email, String contrasena) {
-		Usuario usuario = this.obtenerPorEmail(email).get();
-		System.out.println(this.passwordEncoder.matches(contrasena, usuario.getContrasena()));
-		if (this.passwordEncoder.matches(contrasena, usuario.getContrasena())) {
-			return usuario;
-		}
-		return null;
-	}
-
-	@Override
-	public Boolean existeEmail(String email) {
+	public boolean existeEmail(String email) {
 		return this.repositorioUsuario.existsByEmail(email);
 	}
 
 	@Override
-	public Usuario actualizar(Usuario usuario) {
-		Usuario usuarioAActualizar = this.obtenerPorId(usuario.getId());
-
-		if (Objects.nonNull(usuarioAActualizar.getNombre())) {
-			usuarioAActualizar.setNombre(usuario.getNombre());
+	public void bloquear(Long id) {
+		Usuario usuarioABloquear = this.obtenerPorId(id);
+		try {
+			usuarioABloquear.setHabilitado(false);
+			this.repositorioUsuario.save(usuarioABloquear);
+		} catch (Exception e) {
+			throw new BloqueoUsuarioException("No se ha podido bloquear al usuario con ID: " + id);
 		}
-		usuarioAActualizar.setApellido1(usuario.getApellido1());
-		usuarioAActualizar.setEmail(usuario.getEmail());
-		if (Objects.nonNull(usuarioAActualizar.getContrasena())) {
-			usuarioAActualizar.setContrasena(this.passwordEncoder.encode(usuario.getContrasena()));
-		}
-
-		return this.repositorioUsuario.save(usuarioAActualizar);
 	}
 
 	@Override
-	public Usuario bloquear(Long id) {
-		Usuario usuarioABloquear = this.obtenerPorId(id);
-
-		usuarioABloquear.setHabilitado(false);
-
-		return this.repositorioUsuario.save(usuarioABloquear);
+	public void desbloquear(Long id) {
+		Usuario usuarioADesbloquear = this.obtenerPorId(id);
+		try {
+			usuarioADesbloquear.setHabilitado(true);
+			this.repositorioUsuario.save(usuarioADesbloquear);
+		} catch (Exception e) {
+			throw new DesbloqueoUsuarioException("No se ha podido desbloquear al usuario con ID: " + id);
+		}
 	}
 
 	@Override
 	public void eliminar(Long id, String contrasena) {
 		Usuario usuarioAEliminar = this.obtenerPorId(id);
-
-		if (Objects.nonNull(usuarioAEliminar)
-				&& this.passwordEncoder.matches(contrasena, usuarioAEliminar.getContrasena())) {
-			this.repositorioUsuario.deleteById(id);
+		try {
+			if (this.passwordEncoder.matches(contrasena, usuarioAEliminar.getContrasena())) {
+				this.repositorioUsuario.deleteById(id);
+			}
+		} catch (Exception e) {
+			throw new EliminacionUsuarioException("No se ha podido eliminar el usuario con ID: " + id);
 		}
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		return (UserDetails) this.obtenerPorEmail(email).orElseThrow(
-				() -> new UsernameNotFoundException(MessageFormat.format("username {0} not found", email)));
+	public UserDetails loadUserByUsername(String email) {
+		return (UserDetails) this.obtenerPorEmail(email);
 	}
 
 	@Override

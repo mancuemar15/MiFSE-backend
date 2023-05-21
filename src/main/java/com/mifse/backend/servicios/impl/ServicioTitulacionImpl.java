@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mifse.backend.excepciones.TitulacionNotFoundException;
 import com.mifse.backend.persistencia.modelos.Titulacion;
 import com.mifse.backend.persistencia.repositorios.RepositorioTitulacion;
 import com.mifse.backend.servicios.ServicioTitulacion;
@@ -19,7 +20,11 @@ public class ServicioTitulacionImpl implements ServicioTitulacion {
 
 	@Override
 	public List<Titulacion> obtenerTodas() {
-		return this.repositorioTitulacion.findAll();
+		List<Titulacion> titulaciones = this.repositorioTitulacion.findAll();
+		if (titulaciones.isEmpty()) {
+			throw new TitulacionNotFoundException();
+		}
+		return titulaciones;
 	}
 
 }

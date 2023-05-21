@@ -28,11 +28,12 @@ public class Centro {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	@JsonView({ Vistas.ListaPreferencias.class, Vistas.Lista.class, Vistas.ListaExtendida.class,
-			Vistas.Comentario.class, Vistas.Centro.class })
+			Vistas.Comentario.class, Vistas.Centro.class, Vistas.CentroReducido.class })
 	private Long id;
 
 	@Column(name = "Nombre", nullable = false)
-	@JsonView({ Vistas.ListaPreferencias.class, Vistas.Lista.class, Vistas.ListaExtendida.class, Vistas.Centro.class })
+	@JsonView({ Vistas.ListaPreferencias.class, Vistas.Lista.class, Vistas.ListaExtendida.class, Vistas.Centro.class,
+			Vistas.CentroReducido.class })
 	private String nombre;
 
 	@Column(name = "Direccion", nullable = false)

@@ -17,6 +17,9 @@ public class Vistas {
 	public class Centro {
 	}
 
+	public class CentroReducido {
+	}
+
 	public class Comentario {
 	}
 

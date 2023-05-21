@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mifse.backend.excepciones.TipoTrabajoFinResidenciaNotFoundException;
 import com.mifse.backend.persistencia.modelos.TipoTrabajoFinResidencia;
 import com.mifse.backend.persistencia.repositorios.RepositorioTipoTrabajoFinResidencia;
 import com.mifse.backend.servicios.ServicioTipoTrabajoFinResidencia;
@@ -17,7 +18,11 @@ public class ServicioTipoTrabajoFinResidenciaImpl implements ServicioTipoTrabajo
 
 	@Override
 	public List<TipoTrabajoFinResidencia> obtenerTodos() {
-		return this.repositorioTipoTrabajoFinResidencia.findAll();
+		List<TipoTrabajoFinResidencia> tiposTrabajoFinResidencia = this.repositorioTipoTrabajoFinResidencia.findAll();
+		if (tiposTrabajoFinResidencia.isEmpty()) {
+			throw new TipoTrabajoFinResidenciaNotFoundException();
+		}
+		return tiposTrabajoFinResidencia;
 	}
 
 }

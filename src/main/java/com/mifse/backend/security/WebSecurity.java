@@ -1,9 +1,10 @@
 package com.mifse.backend.security;
 
+import javax.crypto.SecretKey;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,11 +19,7 @@ import org.springframework.security.oauth2.server.resource.web.access.BearerToke
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.nimbusds.jose.jwk.JWK;
-import com.nimbusds.jose.jwk.JWKSet;
-import com.nimbusds.jose.jwk.RSAKey;
-import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
-import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import com.nimbusds.jose.proc.SecurityContext;
 
 @Configuration
@@ -30,16 +27,16 @@ import com.nimbusds.jose.proc.SecurityContext;
 public class WebSecurity {
 
 	@Autowired
-	ConversorJwtAUsuario jwtToUserConverter;
+	private ConversorJwtAUsuario jwtToUserConverter;
 
 	@Autowired
-	UtilidadadesKey keyUtils;
+	private UtilidadesToken utilidadesKey;
 
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
 	@Autowired
-	UserDetailsManager userDetailsManager;
+	private UserDetailsManager userDetailsManager;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -54,10 +51,11 @@ public class WebSecurity {
 				.accessDeniedHandler(new BearerTokenAccessDeniedHandler())
 				.and()
 				.authorizeHttpRequests()
-				.antMatchers("/residentes/registro", "/usuarios/login", "/usuarios/verificar", "/tipos-guardias", "/tipos-residentes",
-						"/tipos-trabajos", "/titulaciones", "/ultimas-posiciones/*", "/centros/**",
-						"/especialidades/**", "/especialidades-centros/*", "/contacto").permitAll()
-				.antMatchers("/usuarios", "/usuarios/bloquear/*", "/administradores/**", "/comentarios/*").hasRole("ADMINISTRADOR")
+				.antMatchers("/residentes/registro", "/usuarios/login", "/usuarios/verificar", "/tipos-guardias", 
+						"/tipos-residentes", "/tipos-trabajos", "/titulaciones", "/ultimas-posiciones/*", 
+						"/centros/**", "/especialidades/**", "/especialidades-centros/*", "/contacto").permitAll()
+				.antMatchers("/usuarios", "/usuarios/bloquear/*", "/usuarios/desbloquear/*", "/administradores/**", 
+						"/comentarios/*").hasRole("ADMINISTRADOR")
 				.antMatchers("/listas/**", "/mensajes/**").hasRole("RESIDENTE")
 				.anyRequest().authenticated()
 				.and()
@@ -67,22 +65,18 @@ public class WebSecurity {
 	}
 
 	@Bean
-	@Primary
-	JwtDecoder jwtAccessTokenDecoder() {
-		return NimbusJwtDecoder.withPublicKey(keyUtils.getAccessTokenPublicKey()).build();
+	public JwtDecoder jwtTokenDecoder() {
+		return NimbusJwtDecoder.withSecretKey(this.utilidadesKey.getTokenSecret()).build();
 	}
 
 	@Bean
-	@Primary
-	JwtEncoder jwtAccessTokenEncoder() {
-		JWK jwk = new RSAKey.Builder(keyUtils.getAccessTokenPublicKey()).privateKey(keyUtils.getAccessTokenPrivateKey())
-				.build();
-		JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
-		return new NimbusJwtEncoder(jwks);
+	public JwtEncoder jwtTokenEncoder() {
+		SecretKey tokenSecretKey = this.utilidadesKey.getTokenSecret();
+		return new NimbusJwtEncoder(new ImmutableSecret<SecurityContext>(tokenSecretKey));
 	}
 
 	@Bean
-	DaoAuthenticationProvider daoAuthenticationProvider() {
+	public DaoAuthenticationProvider daoAuthenticationProvider() {
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 		provider.setPasswordEncoder(passwordEncoder);
 		provider.setUserDetailsService(userDetailsManager);

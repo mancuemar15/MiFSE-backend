@@ -10,7 +10,7 @@ public interface ServicioLista {
 
     public List<Lista> obtenerListasPorIdResidente(Long idResidente);
     
-    public Lista guardar(Lista lista);
+    public Lista crear(Lista lista);
     
     public Lista actualizar(Lista lista);
     

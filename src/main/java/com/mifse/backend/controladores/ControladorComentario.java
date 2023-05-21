@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.mifse.backend.excepciones.ComentarioNotFoundException;
+import com.mifse.backend.excepciones.EliminacionComentarioException;
+import com.mifse.backend.excepciones.GuardarComentarioException;
 import com.mifse.backend.persistencia.modelos.Comentario;
 import com.mifse.backend.servicios.ServicioComentario;
 import com.mifse.backend.vistas.Vistas;
@@ -26,14 +30,23 @@ public class ControladorComentario {
 	@PreAuthorize("authentication.principal.id == #comentario.residente.id")
 	@JsonView(Vistas.Comentario.class)
 	@PostMapping
-	public ResponseEntity<?> guardar(@RequestBody Comentario comentario) {
-		Comentario comentarioGuardado = this.servicioComentario.guardar(comentario);
-		return ResponseEntity.status(HttpStatus.CREATED).body(comentarioGuardado);
+	public ResponseEntity<Comentario> guardar(@RequestBody Comentario comentario) {
+		try {
+			return ResponseEntity.status(HttpStatus.CREATED).body(this.servicioComentario.guardar(comentario));
+		} catch (GuardarComentarioException e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> borrar(@PathVariable Long id) {
-		this.servicioComentario.eliminarPorId(id);
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<Comentario> borrar(@PathVariable Long id) {
+		try {
+			this.servicioComentario.eliminarPorId(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} catch (EliminacionComentarioException e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (ComentarioNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.mifse.backend.controladores;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,10 +20,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mifse.backend.excepciones.BloqueoUsuarioException;
+import com.mifse.backend.excepciones.DesbloqueoUsuarioException;
+import com.mifse.backend.excepciones.EliminacionUsuarioException;
+import com.mifse.backend.excepciones.UsuarioNotFoundException;
+import com.mifse.backend.excepciones.VerificacionUsuarioException;
 import com.mifse.backend.persistencia.modelos.Usuario;
 import com.mifse.backend.persistencia.modelos.dto.Credenciales;
 import com.mifse.backend.security.GeneradorToken;
@@ -36,54 +44,75 @@ public class ControladorUsuario {
 	private ServicioUsuario servicioUsuario;
 
 	@Autowired
-	GeneradorToken generadorToken;
+	private GeneradorToken generadorToken;
 
 	@Autowired
-	DaoAuthenticationProvider daoAuthenticationProvider;
+	private DaoAuthenticationProvider daoAuthenticationProvider;
 
 	@JsonView(Vistas.Usuario.class)
 	@GetMapping
-	public ResponseEntity<?> obtenerTodosUsuarios() {
-		return ResponseEntity.ok(this.servicioUsuario.obtenerTodos());
+	public ResponseEntity<List<Usuario>> obtenerTodosUsuarios() {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(this.servicioUsuario.obtenerTodos());
+		} catch (UsuarioNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
 	}
 
-	@PostMapping("/verificar")
-	public ResponseEntity<String> verificarCorreoElectronico(@RequestParam("id") Long id) {
-		Boolean correoElectronicoVerificado = this.servicioUsuario.verificarCorreoElectronico(id);
-		if (correoElectronicoVerificado) {
-			return ResponseEntity.ok("Tu correo electrónico ha sido verificado correctamente");
-		} else {
-			return ResponseEntity.badRequest().body("El ID de verificación no es válido");
+	@GetMapping("/verificar")
+	public ResponseEntity<String> verificarCorreoElectronico(@RequestParam Long id) {
+		try {
+			this.servicioUsuario.verificarUsuario(id);
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} catch (VerificacionUsuarioException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@PostMapping(path = "/login")
 	public ResponseEntity<?> iniciarSesionUsuario(@RequestBody Credenciales credenciales) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
 
-		ObjectMapper objectMapper = new ObjectMapper();
+			Authentication authentication = this.daoAuthenticationProvider
+					.authenticate(UsernamePasswordAuthenticationToken.unauthenticated(credenciales.getEmail(),
+							credenciales.getContrasena()));
 
-		Authentication authentication = daoAuthenticationProvider.authenticate(UsernamePasswordAuthenticationToken
-				.unauthenticated(credenciales.getEmail(), credenciales.getContrasena()));
+			Usuario usuario = (Usuario) authentication.getPrincipal();
 
-		Usuario usuario = (Usuario) authentication.getPrincipal();
+			Map<String, Object> usuarioMap = objectMapper.convertValue(usuario,
+					new TypeReference<Map<String, Object>>() {
+					});
 
-		Map<String, Object> usuarioMap = objectMapper.convertValue(usuario, new TypeReference<Map<String, Object>>() {
-		});
+			usuarioMap.put("token", this.generadorToken.generarToken(authentication));
+			usuarioMap.remove("contrasena");
+			usuarioMap.remove("fechaAlta");
 
-		usuarioMap.put("token", this.generadorToken.generarToken(authentication));
-		usuarioMap.remove("contrasena");
-		usuarioMap.remove("fechaAlta");
-
-		return ResponseEntity.ok(usuarioMap);
+			return ResponseEntity.status(HttpStatus.OK).body(usuarioMap);
+		} catch (AuthenticationException e) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@PutMapping("/bloquear/{id}")
-	public ResponseEntity<?> bloquearUsuario(@PathVariable("id") Long id) {
+	public ResponseEntity<?> bloquearUsuario(@PathVariable Long id) {
 		try {
-			Usuario usuario = this.servicioUsuario.bloquear(id);
-			return ResponseEntity.ok(usuario);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el usuario");
+			this.servicioUsuario.bloquear(id);
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} catch (BloqueoUsuarioException e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PutMapping("/desbloquear/{id}")
+	public ResponseEntity<?> desbloquearUsuario(@PathVariable("id") Long id) {
+		try {
+			this.servicioUsuario.desbloquear(id);
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} catch (DesbloqueoUsuarioException e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -92,9 +121,9 @@ public class ControladorUsuario {
 	public ResponseEntity<?> borrarUsuario(@PathVariable("id") Long id, @RequestBody Map<String, String> credencial) {
 		try {
 			this.servicioUsuario.eliminar(id, credencial.get("contrasena"));
-			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el usuario");
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} catch (EliminacionUsuarioException e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

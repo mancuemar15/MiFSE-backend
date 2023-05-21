@@ -1,8 +1,11 @@
 package com.mifse.backend.security;
 
+import java.time.Instant;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -14,7 +17,7 @@ import com.mifse.backend.persistencia.modelos.Usuario;
 public class GeneradorToken {
 
 	@Autowired
-	JwtEncoder accessTokenEncoder;
+	private JwtEncoder tokenEncoder;
 
 	public String generarToken(Authentication authentication) {
 		if (!(authentication.getPrincipal() instanceof Usuario)) {
@@ -23,9 +26,10 @@ public class GeneradorToken {
 		}
 
 		Usuario usuario = (Usuario) authentication.getPrincipal();
+		JwtClaimsSet claimsSet = JwtClaimsSet.builder().issuedAt(Instant.now()).subject(usuario.getId().toString())
+				.build();
+		JwsHeader jwsHeader = JwsHeader.with(() -> "HS256").build();
 
-		JwtClaimsSet claimsSet = JwtClaimsSet.builder().subject(usuario.getId().toString()).build();
-
-		return accessTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue();
+		return this.tokenEncoder.encode(JwtEncoderParameters.from(jwsHeader, claimsSet)).getTokenValue();
 	}
 }

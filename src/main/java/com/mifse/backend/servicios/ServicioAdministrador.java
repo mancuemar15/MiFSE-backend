@@ -4,7 +4,7 @@ import com.mifse.backend.persistencia.modelos.Administrador;
 
 public interface ServicioAdministrador {
 
-	public Administrador guardar(Administrador administrador);
+	public Administrador crear(Administrador administrador);
 
 	public Administrador actualizar(Administrador administrador);
 }

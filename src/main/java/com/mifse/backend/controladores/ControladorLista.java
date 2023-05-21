@@ -14,8 +14,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.mifse.backend.excepciones.ActualizacionListaException;
+import com.mifse.backend.excepciones.CreacionListaException;
+import com.mifse.backend.excepciones.EliminacionListaException;
+import com.mifse.backend.excepciones.ListaNotFoundException;
 import com.mifse.backend.persistencia.modelos.Lista;
 import com.mifse.backend.servicios.ServicioLista;
 import com.mifse.backend.vistas.Vistas;
@@ -29,54 +34,66 @@ public class ControladorLista {
 
 	@JsonView(Vistas.ListaExtendida.class)
 	@GetMapping("/{id}")
-	public ResponseEntity<?> obtenerListaPorId(@PathVariable Long id) {
-		Lista lista = this.servicioLista.obtenerPorIdOrdenadoPorNumeroPreferencia(id);
-		if (lista == null) {
-			return ResponseEntity.noContent().build();
+	public ResponseEntity<Lista> obtenerListaPorId(@PathVariable Long id) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(this.servicioLista.obtenerPorIdOrdenadoPorNumeroPreferencia(id));
+		} catch (ListaNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT);
 		}
-		return ResponseEntity.ok(lista);
 	}
 
 	@JsonView(Vistas.ListaPreferencias.class)
 	@GetMapping("/{id}/preferencias")
-	public ResponseEntity<?> obtenerListaPreferenciasPorId(@PathVariable Long id) {
-		Lista lista = this.servicioLista.obtenerPorIdOrdenadoPorNumeroPreferencia(id);
-		if (lista == null) {
-			return ResponseEntity.noContent().build();
+	public ResponseEntity<Lista> obtenerListaPreferenciasPorId(@PathVariable Long id) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(this.servicioLista.obtenerPorIdOrdenadoPorNumeroPreferencia(id));
+		} catch (ListaNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT);
 		}
-		return ResponseEntity.ok(lista);
 	}
 
 	@PreAuthorize("authentication.principal.id == #idResidente")
 	@JsonView(Vistas.ListaPreferencias.class)
 	@GetMapping("/residente/{idResidente}")
-	public ResponseEntity<?> obtenerListasDeResidente(@PathVariable Long idResidente) {
-		List<Lista> listas = this.servicioLista.obtenerListasPorIdResidente(idResidente);
-		if (listas.isEmpty()) {
-			return ResponseEntity.noContent().build();
+	public ResponseEntity<List<Lista>> obtenerListasDeResidente(@PathVariable Long idResidente) {
+		try {
+			return ResponseEntity.ok(this.servicioLista.obtenerListasPorIdResidente(idResidente));
+		} catch (ListaNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT);
 		}
-		return ResponseEntity.ok(listas);
 	}
 
 	@PreAuthorize("authentication.principal.id == #lista.residente.id")
 	@JsonView(Vistas.ListaPreferencias.class)
 	@PostMapping
-	public ResponseEntity<?> crearLista(@RequestBody Lista lista) {
-		Lista listaCreada = this.servicioLista.guardar(lista);
-		return ResponseEntity.status(HttpStatus.CREATED).body(listaCreada);
+	public ResponseEntity<Lista> crearLista(@RequestBody Lista lista) {
+		try {
+			return ResponseEntity.status(HttpStatus.CREATED).body(this.servicioLista.crear(lista));
+		} catch (CreacionListaException e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@PreAuthorize("authentication.principal.id == #lista.residente.id")
 	@JsonView(Vistas.ListaPreferencias.class)
 	@PutMapping
-	public ResponseEntity<?> actualizarLista(@RequestBody Lista lista) {
-		Lista listaActualizada = this.servicioLista.actualizar(lista);
-		return ResponseEntity.status(HttpStatus.OK).body(listaActualizada);
+	public ResponseEntity<Lista> actualizarLista(@RequestBody Lista lista) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(this.servicioLista.actualizar(lista));
+		} catch (ActualizacionListaException | ListaNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> eliminarLista(@PathVariable Long id) {
-		this.servicioLista.eliminarPorId(id);
-		return ResponseEntity.noContent().build();
+		try {
+			this.servicioLista.eliminarPorId(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} catch (EliminacionListaException | ListaNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

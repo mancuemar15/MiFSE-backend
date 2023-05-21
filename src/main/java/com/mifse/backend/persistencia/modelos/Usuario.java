@@ -40,19 +40,23 @@ public class Usuario implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView({ Vistas.ListaPreferencias.class, Vistas.Centro.class, Vistas.Comentario.class, Vistas.Usuario.class })
+	@JsonView({ Vistas.ListaPreferencias.class, Vistas.Centro.class, Vistas.Comentario.class, Vistas.Conversacion.class,
+			Vistas.Usuario.class })
 	protected Long id;
 
 	@Column(name = "Nombre")
-	@JsonView({ Vistas.Conversacion.class, Vistas.Centro.class, Vistas.Comentario.class, Vistas.Usuario.class })
+	@JsonView({ Vistas.Conversacion.class, Vistas.Centro.class, Vistas.Comentario.class, Vistas.Conversacion.class,
+			Vistas.Usuario.class })
 	protected String nombre;
 
 	@Column(name = "Apellido_1")
-	@JsonView({ Vistas.Conversacion.class, Vistas.Centro.class, Vistas.Comentario.class, Vistas.Usuario.class })
+	@JsonView({ Vistas.Conversacion.class, Vistas.Centro.class, Vistas.Comentario.class, Vistas.Conversacion.class,
+			Vistas.Usuario.class })
 	protected String apellido1;
 
 	@Column(name = "Apellido_2")
-	@JsonView({ Vistas.Conversacion.class, Vistas.Centro.class, Vistas.Comentario.class, Vistas.Usuario.class })
+	@JsonView({ Vistas.Conversacion.class, Vistas.Centro.class, Vistas.Comentario.class, Vistas.Conversacion.class,
+			Vistas.Usuario.class })
 	protected String apellido2;
 
 	@NaturalId
@@ -71,9 +75,10 @@ public class Usuario implements UserDetails {
 	protected boolean verificado;
 
 	@Column(name = "Habilitado")
-	@JsonIgnore
+	@JsonView(Vistas.Usuario.class)
 	private boolean habilitado;
 
+	@JsonView(Vistas.Usuario.class)
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_tipo_usuario")
 	protected TipoUsuario tipoUsuario;

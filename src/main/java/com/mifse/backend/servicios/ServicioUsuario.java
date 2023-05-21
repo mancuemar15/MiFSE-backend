@@ -1,7 +1,6 @@
 package com.mifse.backend.servicios;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.mifse.backend.persistencia.modelos.Usuario;
 
@@ -11,17 +10,15 @@ public interface ServicioUsuario {
 
 	public List<Usuario> obtenerTodos();
 
-	public Boolean verificarCorreoElectronico(Long id);
+	public void verificarUsuario(Long id);
 
-	public Usuario obtenerPorEmailYContrasena(String email, String contrasena);
+	public boolean existeEmail(String email);
 
-	public Boolean existeEmail(String email);
+	public void bloquear(Long id);
 
-	public Usuario actualizar(Usuario usuario);
+	public void desbloquear(Long id);
 
-	public Usuario bloquear(Long id);
-
-	Optional<Usuario> obtenerPorEmail(String email);
+	public Usuario obtenerPorEmail(String email);
 
 	public void eliminar(Long id, String contrasena);
 
