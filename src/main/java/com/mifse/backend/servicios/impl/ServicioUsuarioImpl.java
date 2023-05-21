@@ -3,6 +3,7 @@ package com.mifse.backend.servicios.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
@@ -95,7 +96,11 @@ public class ServicioUsuarioImpl implements ServicioUsuario, UserDetailsManager 
 		try {
 			if (this.passwordEncoder.matches(contrasena, usuarioAEliminar.getContrasena())) {
 				this.repositorioUsuario.deleteById(id);
+			} else {
+				throw new BadCredentialsException("La contraseña no es correcta.");
 			}
+		} catch (BadCredentialsException e) {
+			throw new BadCredentialsException("La contraseña no es correcta.");
 		} catch (Exception e) {
 			throw new EliminacionUsuarioException("No se ha podido eliminar el usuario con ID: " + id);
 		}

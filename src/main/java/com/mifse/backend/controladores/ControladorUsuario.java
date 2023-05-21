@@ -122,6 +122,8 @@ public class ControladorUsuario {
 		try {
 			this.servicioUsuario.eliminar(id, credencial.get("contrasena"));
 			return ResponseEntity.status(HttpStatus.OK).build();
+		} catch (AuthenticationException e) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 		} catch (EliminacionUsuarioException e) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
