@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.mifse.backend.excepciones.EspecialidadTitulacionNotFoundException;
+import com.mifse.backend.excepciones.EspecialidadCentroNotFoundException;
 import com.mifse.backend.persistencia.modelos.EspecialidadCentro;
 import com.mifse.backend.servicios.ServicioEspecialidadCentro;
 import com.mifse.backend.vistas.Vistas;
@@ -31,7 +31,7 @@ public class ControladorEspecialidadCentro {
 		try {
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(this.servicioEspecialidadCentro.obtenerTodasPorNombreTitulacion(nombreTitulacion));
-		} catch (EspecialidadTitulacionNotFoundException e) {
+		} catch (EspecialidadCentroNotFoundException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
 	}

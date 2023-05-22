@@ -13,9 +13,6 @@ import lombok.EqualsAndHashCode;
 @PrimaryKeyJoinColumn(name = "ID")
 public class Administrador extends Usuario {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7307864758959623460L;
 	
 	@Id

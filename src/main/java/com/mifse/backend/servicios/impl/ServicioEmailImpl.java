@@ -11,7 +11,7 @@ import com.mifse.backend.servicios.ServicioEmail;
 @Service
 public class ServicioEmailImpl implements ServicioEmail {
 
-	private final String URL_VERIFICACION = "http://localhost:8090/usuarios/verificar?id=";
+	private final String URL_VERIFICACION = "http://localhost:5173/verificacion?id=";
 
 	@Autowired
 	private JavaMailSender mailSender;
