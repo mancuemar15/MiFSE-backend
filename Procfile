@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.mifse.backend
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.mifse.backend.MifseBackendApplication
