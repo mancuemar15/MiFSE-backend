@@ -86,8 +86,14 @@
 			</plugin>
 			<plugin>
 				<groupId>com.heroku.sdk</groupId>
-				<artifactId>heroku-deploy</artifactId>
+				<artifactId>heroku-maven-plugin</artifactId>
 				<version>3.0.7</version>
+				<configuration>
+					<processTypes>
+						<web>java $JAVA_OPTS -cp
+							target/classes:target/dependency/* com.mifse.backend.MifseBackendApplication</web>
+					</processTypes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
