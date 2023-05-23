@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.mifse.backend.MifseBackendApplication
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/*.war $JAR_OPTS

@@ -33,7 +33,7 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 
 	@Override
 	public List<Mensaje> obtenerTodosPorIdEmisorYIdReceptor(Long idEmisor, Long idReceptor) {
-		List<Mensaje> mensajes = this.repositorioMensaje.findAllByEmisorIdAndReceptorIdOrEmisorIdAndReceptorId(idEmisor,
+		List<Mensaje> mensajes = this.repositorioMensaje.findAllByEmisorIdAndReceptorIdOrEmisorIdAndReceptorIdOrderById(idEmisor,
 				idReceptor, idReceptor, idEmisor);
 		if (mensajes.isEmpty()) {
 			throw new MensajeNotFoundException("No se encontraron mensajes");
