@@ -1,1 +1,1 @@
-web: java -cp target/classes/:target/dependency/* MifseBackendApplication
+web: java -cp target/classes/:target/dependency/* com.mifse.backend.MifseBackendApplication
