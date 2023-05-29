@@ -46,6 +46,9 @@ public class ServicioCentroImpl implements ServicioCentro {
 				Double valoracionMedia = calcularValoracionMedia(centro);
 				centro.setValoracionMedia(valoracionMedia);
 				this.repositorioCentro.save(centro);
+			} catch (ValoracionMediaException e) {
+				centro.setValoracionMedia(null);
+				this.repositorioCentro.save(centro);
 			} catch (Exception e) {
 				throw new ValoracionMediaException(
 						"Error al calcular la valoración media del centro con ID: " + centroId);
@@ -60,7 +63,7 @@ public class ServicioCentroImpl implements ServicioCentro {
 		List<Comentario> comentarios = centro.getComentarios();
 
 		if (comentarios != null && !comentarios.isEmpty()) {
-			valoracionMedia = comentarios.stream().mapToDouble(Comentario::getValoracion).average().orElse(0.0);
+			valoracionMedia = comentarios.stream().mapToDouble(Comentario::getValoracion).average().orElseGet(null);
 		} else {
 			throw new ValoracionMediaException(
 					"No hay comentarios disponibles para calcular la valoración media del centro con ID: "

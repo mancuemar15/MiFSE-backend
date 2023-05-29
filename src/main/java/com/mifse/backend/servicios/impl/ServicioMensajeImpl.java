@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mifse.backend.excepciones.ActualizacionMensajeException;
 import com.mifse.backend.excepciones.MensajeNotFoundException;
 import com.mifse.backend.persistencia.modelos.Mensaje;
-import com.mifse.backend.persistencia.modelos.Usuario;
+import com.mifse.backend.persistencia.modelos.Residente;
 import com.mifse.backend.persistencia.repositorios.RepositorioMensaje;
 import com.mifse.backend.servicios.ServicioEmail;
 import com.mifse.backend.servicios.ServicioMensaje;
@@ -33,8 +33,8 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 
 	@Override
 	public List<Mensaje> obtenerTodosPorIdEmisorYIdReceptor(Long idEmisor, Long idReceptor) {
-		List<Mensaje> mensajes = this.repositorioMensaje.findAllByEmisorIdAndReceptorIdOrEmisorIdAndReceptorIdOrderById(idEmisor,
-				idReceptor, idReceptor, idEmisor);
+		List<Mensaje> mensajes = this.repositorioMensaje.findAllByEmisorIdAndReceptorIdOrEmisorIdAndReceptorIdOrderById(
+				idEmisor, idReceptor, idReceptor, idEmisor);
 		if (mensajes.isEmpty()) {
 			throw new MensajeNotFoundException("No se encontraron mensajes");
 		}
@@ -42,7 +42,7 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 	}
 
 	@Override
-	public Set<Usuario> obtenerUsuariosConMensajesIntercambiados(Long idUsuario) {
+	public Set<Residente> obtenerUsuariosConMensajesIntercambiados(Long idUsuario) {
 		List<Mensaje> mensajesEnviados = this.repositorioMensaje.findByEmisorId(idUsuario);
 		List<Mensaje> mensajesRecibidos = this.repositorioMensaje.findByReceptorId(idUsuario);
 
@@ -51,7 +51,7 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 					"No se encontraron mensajes ni enviados ni recibidos por el usuario con ID: " + idUsuario);
 		}
 
-		Set<Usuario> usuariosConMensajesIntercambiados = new HashSet<>();
+		Set<Residente> usuariosConMensajesIntercambiados = new HashSet<>();
 
 		for (Mensaje mensaje : mensajesEnviados) {
 			usuariosConMensajesIntercambiados.add(mensaje.getReceptor());
@@ -65,17 +65,17 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 	}
 
 	@Override
-	public Set<Usuario> obtenerUsuariosConMensajesIntercambiadosSinLeer(Long idUsuario) {
+	public Set<Residente> obtenerUsuariosConMensajesIntercambiadosSinLeer(Long idUsuario) {
 		List<Mensaje> mensajesRecibidos = this.repositorioMensaje.findByReceptorId(idUsuario);
 
 		if (mensajesRecibidos.isEmpty()) {
 			throw new MensajeNotFoundException("No se encontraron mensajes del usuario con ID: " + idUsuario);
 		}
 
-		Set<Usuario> usuariosConMensajesNoLeidos = new HashSet<>();
+		Set<Residente> usuariosConMensajesNoLeidos = new HashSet<>();
 
 		for (Mensaje mensaje : mensajesRecibidos) {
-			Usuario emisor = mensaje.getEmisor();
+			Residente emisor = mensaje.getEmisor();
 			if (emisor != null && !mensaje.getLeido()) {
 				usuariosConMensajesNoLeidos.add(emisor);
 			}
@@ -90,8 +90,8 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 		Mensaje mensajeGuardado = this.repositorioMensaje.save(mensaje);
 
 		if (Objects.nonNull(mensajeGuardado)) {
-			Usuario emisor = this.servicioUsuario.obtenerPorId(mensajeGuardado.getEmisor().getId());
-			Usuario receptor = this.servicioUsuario.obtenerPorId(mensajeGuardado.getReceptor().getId());
+			Residente emisor = (Residente) this.servicioUsuario.obtenerPorId(mensajeGuardado.getEmisor().getId());
+			Residente receptor = (Residente) this.servicioUsuario.obtenerPorId(mensajeGuardado.getReceptor().getId());
 
 			this.servicioEmail.enviarEmailNuevoMensaje(receptor.getNombre(), receptor.getEmail(), emisor.getNombre(),
 					mensajeGuardado.getContenido());

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mifse.backend.excepciones.ActualizacionMensajeException;
 import com.mifse.backend.excepciones.MensajeNotFoundException;
 import com.mifse.backend.persistencia.modelos.Mensaje;
-import com.mifse.backend.persistencia.modelos.Usuario;
+import com.mifse.backend.persistencia.modelos.Residente;
 import com.mifse.backend.servicios.ServicioMensaje;
 import com.mifse.backend.servicios.ServicioUsuario;
 import org.junit.jupiter.api.BeforeEach;
@@ -74,8 +74,8 @@ class ControladorMensajeTests {
 	@Test
 	public void obtenerUsuariosConMensajesIntercambiados_DeberiaRetornarUsuarios() throws Exception {
 		Long idUsuario = 1L;
-		Set<Usuario> usuarios = new HashSet<>();
-		usuarios.add(new Usuario());
+		Set<Residente> usuarios = new HashSet<>();
+		usuarios.add(new Residente());
 		when(servicioMensaje.obtenerUsuariosConMensajesIntercambiados(idUsuario)).thenReturn(usuarios);
 
 		mockMvc.perform(get("/mensajes/usuarios/{idUsuario}", idUsuario)).andExpect(status().isOk())
@@ -95,8 +95,8 @@ class ControladorMensajeTests {
 	@Test
 	public void obtenerUsuariosConMensajesIntercambiadosSinLeer_DeberiaRetornarUsuarios() throws Exception {
 		Long idUsuario = 1L;
-		Set<Usuario> usuarios = new HashSet<>();
-		usuarios.add(new Usuario());
+		Set<Residente> usuarios = new HashSet<>();
+		usuarios.add(new Residente());
 		when(servicioMensaje.obtenerUsuariosConMensajesIntercambiadosSinLeer(idUsuario)).thenReturn(usuarios);
 
 		mockMvc.perform(get("/mensajes/usuarios/{idUsuario}/sin-leer", idUsuario)).andExpect(status().isOk())

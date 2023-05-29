@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.mifse.backend.excepciones.ActualizacionMensajeException;
 import com.mifse.backend.excepciones.MensajeNotFoundException;
 import com.mifse.backend.persistencia.modelos.Mensaje;
-import com.mifse.backend.persistencia.modelos.Usuario;
+import com.mifse.backend.persistencia.modelos.Residente;
 import com.mifse.backend.servicios.ServicioMensaje;
 import com.mifse.backend.vistas.Vistas;
 
@@ -47,7 +47,7 @@ public class ControladorMensaje {
 
 	@PreAuthorize("authentication.principal.id == #idUsuario")
 	@GetMapping("/usuarios/{idUsuario}")
-	public ResponseEntity<Set<Usuario>> obtenerUsuariosConMensajesIntercambiados(@PathVariable Long idUsuario) {
+	public ResponseEntity<Set<Residente>> obtenerUsuariosConMensajesIntercambiados(@PathVariable Long idUsuario) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(this.servicioMensaje.obtenerUsuariosConMensajesIntercambiados(idUsuario));
@@ -58,7 +58,7 @@ public class ControladorMensaje {
 
 	@PreAuthorize("authentication.principal.id == #idUsuario")
 	@GetMapping("/usuarios/{idUsuario}/sin-leer")
-	public ResponseEntity<Set<Usuario>> obtenerUsuariosConMensajesIntercambiadosSinLeer(@PathVariable Long idUsuario) {
+	public ResponseEntity<Set<Residente>> obtenerUsuariosConMensajesIntercambiadosSinLeer(@PathVariable Long idUsuario) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(this.servicioMensaje.obtenerUsuariosConMensajesIntercambiadosSinLeer(idUsuario));

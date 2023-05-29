@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.mifse.backend.vistas.Vistas;
 
@@ -24,12 +25,12 @@ public class Comentario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	@JsonView({Vistas.Centro.class, Vistas.Comentario.class})
+	@JsonView({ Vistas.Centro.class, Vistas.Comentario.class })
 	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_residente")
-	@JsonView({Vistas.Centro.class, Vistas.Comentario.class})
+	@JsonView({ Vistas.Centro.class, Vistas.Comentario.class })
 	private Residente residente;
 
 	@ManyToOne
@@ -37,15 +38,16 @@ public class Comentario {
 	private Centro centro;
 
 	@Column(name = "Contenido")
-	@JsonView({Vistas.Centro.class, Vistas.Comentario.class})
+	@JsonView({ Vistas.Centro.class, Vistas.Comentario.class })
 	private String contenido;
 
 	@Column(name = "Valoracion")
-	@JsonView({Vistas.Centro.class, Vistas.Comentario.class})
+	@JsonView({ Vistas.Centro.class, Vistas.Comentario.class })
 	private Double valoracion;
 
 	@Column(name = "Fecha")
-	@JsonView({Vistas.Centro.class, Vistas.Comentario.class})
+	@JsonView({ Vistas.Centro.class, Vistas.Comentario.class })
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private Date fecha;
 
 }

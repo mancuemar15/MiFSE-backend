@@ -1,6 +1,6 @@
 package com.mifse.backend.persistencia.modelos;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.mifse.backend.vistas.Vistas;
 
@@ -29,17 +30,18 @@ public class Mensaje {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_usuario_emisor", nullable = false)
-	private Usuario emisor;
+	private Residente emisor;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_usuario_receptor", nullable = false)
-	private Usuario receptor;
+	private Residente receptor;
 
-	@Column(name = "Contenido", nullable = false, columnDefinition = "TEXT")
+	@Column(name = "Contenido", nullable = false)
 	private String contenido;
 
 	@Column(name = "Fecha_envio", nullable = false)
-	private LocalDateTime fechaEnvio;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+	private Date fechaEnvio;
 
 	@Column(name = "Leido")
 	private Boolean leido;

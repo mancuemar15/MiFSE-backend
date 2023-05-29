@@ -43,7 +43,7 @@ class ControladorTipoGuardiasFindesFestivosTests {
 	}
 
 	@Test
-	public void obtenerEpocasVacaciones_DeberiaRetornarListaTipoGuardiasFindesFestivos() throws Exception {
+	public void obtenerTiposGuardiasFindesFestivos_DeberiaRetornarListaTipoGuardiasFindesFestivos() throws Exception {
 		List<TipoGuardiasFindesFestivos> tiposGuardiasFindesFestivos = new ArrayList<>();
 
 		when(servicioTipoGuardiasFindesFestivos.obtenerTodos()).thenReturn(tiposGuardiasFindesFestivos);
@@ -53,7 +53,7 @@ class ControladorTipoGuardiasFindesFestivosTests {
 	}
 
 	@Test
-    public void obtenerEpocasVacaciones_TipoGuardiasFindesFestivosNotFoundException_DeberiaRetornarNotFound() throws Exception {
+    public void obtenerTiposGuardiasFindesFestivos_TipoGuardiasFindesFestivosNotFoundException_DeberiaRetornarNotFound() throws Exception {
         when(servicioTipoGuardiasFindesFestivos.obtenerTodos()).thenThrow(new TipoGuardiasFindesFestivosNotFoundException());
 
         mockMvc.perform(get("/tipos-guardias")

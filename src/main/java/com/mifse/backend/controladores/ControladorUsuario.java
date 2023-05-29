@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -89,6 +90,8 @@ public class ControladorUsuario {
 			usuarioMap.remove("fechaAlta");
 
 			return ResponseEntity.status(HttpStatus.OK).body(usuarioMap);
+		} catch (DisabledException e) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		} catch (AuthenticationException e) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 		} catch (Exception e) {

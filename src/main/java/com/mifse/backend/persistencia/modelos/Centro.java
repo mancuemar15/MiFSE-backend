@@ -44,9 +44,6 @@ public class Centro {
 	@JsonView({ Vistas.Lista.class, Vistas.ListaExtendida.class, Vistas.Centro.class })
 	private Localidad localidad;
 
-	@Column(name = "URL_imagen")
-	private Integer urlImagen;
-
 	@Column(name = "Valoracion_media")
 	@JsonView({ Vistas.Lista.class, Vistas.ListaExtendida.class, Vistas.Centro.class })
 	private Double valoracionMedia;

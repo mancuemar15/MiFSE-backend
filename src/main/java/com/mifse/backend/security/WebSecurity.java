@@ -82,4 +82,5 @@ public class WebSecurity {
 		provider.setUserDetailsService(userDetailsManager);
 		return provider;
 	}
+
 }
