@@ -24,7 +24,8 @@ public class ControladorContacto {
 	public ResponseEntity<?> enviarFormularioContacto(@RequestBody FormularioContacto formulario) {
 		String remitente = formulario.getEmail();
 		String asunto = formulario.getAsunto();
-		String cuerpo = "Nombre: " + formulario.getNombre() + "\n" + "Mensaje: " + formulario.getMensaje();
+		String cuerpo = "Nombre: " + formulario.getNombre() + "\nEmail: " + remitente + "\nMensaje: "
+				+ formulario.getMensaje();
 		try {
 			this.servicioEmail.enviarEmailContacto(remitente, asunto, cuerpo);
 			return ResponseEntity.status(HttpStatus.OK).build();

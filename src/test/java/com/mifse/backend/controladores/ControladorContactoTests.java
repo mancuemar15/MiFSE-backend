@@ -52,7 +52,8 @@ class ControladorContactoTests {
 				.andExpect(status().isOk());
 
 		verify(servicioEmail).enviarEmailContacto(formulario.getEmail(), formulario.getAsunto(),
-				"Nombre: " + formulario.getNombre() + "\n" + "Mensaje: " + formulario.getMensaje());
+				"Nombre: " + formulario.getNombre() + "\nEmail: " + formulario.getEmail() + "\nMensaje: "
+						+ formulario.getMensaje());
 	}
 
 	@Test
@@ -70,6 +71,7 @@ class ControladorContactoTests {
 				.andExpect(status().isInternalServerError());
 
 		verify(servicioEmail).enviarEmailContacto(formulario.getEmail(), formulario.getAsunto(),
-				"Nombre: " + formulario.getNombre() + "\n" + "Mensaje: " + formulario.getMensaje());
+				"Nombre: " + formulario.getNombre() + "\nEmail: " + formulario.getEmail() + "\nMensaje: "
+						+ formulario.getMensaje());
 	}
 }

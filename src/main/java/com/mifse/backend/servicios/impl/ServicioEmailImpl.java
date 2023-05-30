@@ -38,7 +38,6 @@ public class ServicioEmailImpl implements ServicioEmail {
 		try {
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setTo("mifse.noreply@gmail.com");
-			message.setFrom(remitente);
 			message.setSubject(asunto);
 			message.setText(cuerpo);
 			this.mailSender.send(message);
